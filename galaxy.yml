@@ -1,0 +1,8 @@
+namespace: "dimagi"
+name: "commcare_prometheus"
+version: "0.1.0"
+readme: "README.md"
+authors:
+    - "rkumar@dimagi.com"
+    - "skelly@dimagi.com"
+repository: "https://www.github.com/dimagi/commcare-promtheus"

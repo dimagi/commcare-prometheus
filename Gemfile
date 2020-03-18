@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+gem "test-kitchen", "~> 2.3.4"
+gem "kitchen-docker"
+gem "kitchen-ansible"
+gem "net-ssh"
+gem "serverspec"
+gem "kitchen-verifier-serverspec"

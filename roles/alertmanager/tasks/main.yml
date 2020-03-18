@@ -1,0 +1,11 @@
+- name: Configure  alertmanager
+  template: src=alertmanager.yml.j2 dest=/etc/alertmanager/alertmanager.yml
+  tags: alertmanager
+  notify: restart alertmanager
+
+- name: Copy Template file
+  copy:
+    src: "{{ role_path }}/files/myorg.tmpl"
+    dest: /etc/alertmanager/templates/myorg.tmpl
+  notify: restart alertmanager
+

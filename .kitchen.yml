@@ -1,0 +1,52 @@
+---
+driver:
+  name: docker
+#enble to true if you are not s root on your workstation  
+use_sudo: false
+
+platforms:
+  - name: ubuntu-18.04
+    driver_config:
+      image: ubuntu:18.04
+      privileged: true
+      run_command: /bin/systemd
+      provision_command:
+        - apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ansible/ansible
+        - apt-get update && apt-get -y -q install rsync ansible python-apt python-pycurl python-jmespath
+      use_sudo: false
+
+provisioner:
+  name: ansible_playbook
+  hosts: test_kitchen
+  requirements_path: dependencies.yml
+  roles_path: ./roles
+  additional_copy_path: "test"
+  ansible_verbose: false
+  ansible_verbosity: 2
+  require_ansible_repo: false
+  require_ansible_omnibus: false
+  require_chef_for_busser: false
+  ansible_connection: ssh
+
+verifier:
+  name: serverspec
+  use_sudo: yes
+  sudo_path: true
+
+suites:
+  - name: prometheus
+    verifier:
+      patterns:
+        - test/integration/prometheus/serverspec/test_spec.rb
+  - name: alertmanager
+    verifier:
+      patterns:
+        - test/integration/alertmanager/serverspec/test_spec.rb
+  - name: grafana
+    verifier:
+      patterns:
+        - test/integration/grafana/serverspec/test_spec.rb
+  - name: prometheus_node_exporter    
+    verifier:
+      patterns:
+        - test/integration/prometheus_node_exporter/serverspec/test_spec.rb

@@ -1,0 +1,12 @@
+[
+  {
+    "targets": [
+      {% for item in groups.all %}
+      "{{ hostvars[item].alt_hostname }}:9100",
+    ],
+    "labels": {
+      "job": "node_exporter"
+    }
+  }
+]
+

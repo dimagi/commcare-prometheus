@@ -1,0 +1,42 @@
+#
+# Ansible managed
+#
+# http://prometheus.io/docs/operating/configuration/
+
+global:
+  evaluation_interval: 15s
+  scrape_interval: 15s
+  scrape_timeout: 10s
+
+  external_labels:
+    environment: {{ "monitoring_env" }}
+
+rule_files:
+  - /etc/prometheus/rules/*.rules
+
+
+scrape_configs:
+  - job_name: prometheus
+    metrics_path: /metrics
+    static_configs:
+    - targets:
+      - localhost:9090
+  - job_name: 'dummy' 
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/file_sd/*.json
+   relabel_configs:
+      - source_labels: ['__address__']
+        separator:     ':'
+        regex:         '(.*):.*'
+        target_label:  'instance'
+        replacement:   '${1}'
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+    {% for host in groups['alertmanager'] %}
+      - '{{ host }}:9093'
+    {% endfor %}
+
