@@ -4,7 +4,7 @@
   notify: restart prometheus
 
 - name: Configure  Prometheus Node exporter target 
-  template: src=node_exporter_target.json.j2 dest=/etc/prometheus/node_exporter_target.json
+  template: src=node_exporter_target.json.j2 dest=/etc/prometheus/file_sd/node_exporter_target.json
   tags: prometheus
   notify: restart prometheus
 
