@@ -1,1 +1,3 @@
 monitoring_env: prometheus
+prometheus_db_dir: /opt/data
+prometheus_storage_retention: "365d"
