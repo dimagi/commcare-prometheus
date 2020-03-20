@@ -1,3 +1,11 @@
+- name: Create Prometheus DB directory
+  file:
+    path: "{{ prometheus_db_dir }}"
+    state: directory
+    recurse: yes
+    owner: prometheus
+    group: prometheus
+ 
 - name: Configure  Prometheus
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
   tags: prometheus

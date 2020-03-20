@@ -13,6 +13,10 @@ alertmanager_route:
   repeat_interval: 4h
   receiver: slack
 
+prometheus_db_dir: /opt/data/prometheus
+prometheus_storage_retention: "365d"
+
+grafana_data_dir: /opt/data/grafana
 grafana_security:
   admin_user: admin
   admin_password: password
