@@ -8,3 +8,11 @@
   tags: prometheus
   notify: restart prometheus
 
+- name: Sets /etc/hosts
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regex: '^{{ item }}.*'
+    line: "{{ item }} {{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}" 
+  with_items: "{{ groups.all }}"
+  when: prod_mode| default(False) 

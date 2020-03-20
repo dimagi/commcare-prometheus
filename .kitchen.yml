@@ -18,6 +18,7 @@ platforms:
 provisioner:
   name: ansible_playbook
   hosts: test_kitchen
+  ansible_inventory: hostfile.ini
   requirements_path: dependencies.yml
   roles_path: ./roles
   additional_copy_path: "test"
@@ -26,7 +27,7 @@ provisioner:
   require_ansible_repo: false
   require_ansible_omnibus: false
   require_chef_for_busser: false
-  ansible_connection: ssh
+  ansible_connection: local
 
 verifier:
   name: serverspec

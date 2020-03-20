@@ -1,9 +1,13 @@
 [
   {
     "targets": [
-      {% for item in groups.all %}
-      "{{ hostvars[item].alt_hostname }}:9100",
-      {% endfor %} 
+      {%- for item in groups.all -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9100",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9100"
+      {% endif %}
+      {%- endfor -%} 
     ],
     "labels": {
       "job": "node_exporter"
