@@ -1,0 +1,4 @@
+---
+pgbouncer_exporter_port: 9132
+pgbouncer_exporter_host: "0.0.0.0"
+pgbouncer_dsn: "postgresql://pgbouncer:$(PGBOUNCER_PASS)@localhost:6432/pgbouncer"

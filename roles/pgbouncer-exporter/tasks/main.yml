@@ -1,0 +1,19 @@
+---
+- name: Install Prometheus pgbouncer exporter (A Python Package)
+  apt:
+    name: prometheus-pgbouncer-exporter
+    state: present
+
+- name: Create Config for pgbouncer exporter
+  template:
+    src: prometheus-pgbouncer-exporter.conf.j2
+    dest: /etc/prometheus-pgbouncer-exporter.conf
+  notify: restart pgbouncer exporter
+
+- meta: flush_handlers
+
+- name: make sure pgbouncer Exporter is started
+  service:
+    name: prometheus-pgbouncer-exporter
+    state: started
+    enabled: yes
