@@ -21,3 +21,5 @@ grafana_security:
   admin_user: admin
   admin_password: password
 
+
+node_exporter_enabled_collectors: ['systemd','ntp','processes','supervisord']
