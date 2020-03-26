@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus Apache Exporter
+After=network.target
+
+[Service]
+ExecStart={{ nginx_exporter_binary }} \
+          {% if nginx_exporter_nginx_plus %}-nginx.plus\ {% endif %}
+          -nginx.scrape-uri {{ nginx_exporter_scrape_uri }} \
+          -web.listen-address {{ nginx_exporter_listen_address }}
+
+[Install]
+WantedBy=multi-user.target
