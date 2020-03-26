@@ -1,0 +1,27 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ couchdb_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive couchdb Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ couchdb_exporter_install_dir }}"
+    src: "{{ couchdb_exporter_url }}"
+    creates: "{{ couchdb_exporter_binary }}"
+  notify: restart couchdb exporter
+
+- name: create systemd script
+  template:
+    src: couchdb_exporter.service.j2
+    dest: /etc/systemd/system/couchdb_exporter.service
+  notify: restart couchdb exporter
+
+- meta: flush_handlers
+
+- name: make sure couchdb Exporter is started
+  service:
+    name: couchdb_exporter
+    state: started
+    enabled: yes
