@@ -1,0 +1,27 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ redis_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive Redis Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ redis_exporter_install_dir }}"
+    src: "{{ redis_exporter_url }}"
+    creates: "{{ redis_exporter_binary }}"
+  notify: restart redis exporter
+
+- name: create systemd script
+  template:
+    src: redis_exporter.service.j2
+    dest: /etc/systemd/system/redis-exporter.service
+  notify: restart redis exporter
+
+- meta: flush_handlers
+
+- name: make sure Redis Exporter is started
+  service:
+    name: redis-exporter
+    state: started
+    enabled: yes
