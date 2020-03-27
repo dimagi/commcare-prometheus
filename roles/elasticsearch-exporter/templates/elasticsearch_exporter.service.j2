@@ -1,0 +1,34 @@
+[Unit]
+Description=Elasticsearch Exporter
+After=network.target
+
+[Service]
+ExecStart={{ elasticsearch_exporter_symlink }} \
+            --es.uri {{ elasticsearch_exporter_es_uri }} \
+            {%- if elasticsearch_exporter_es_all -%}   
+            --es.all \
+            {%- endif -%}
+            {%- if  elasticsearch_exporter_es_indices -%}
+            --es.indices \
+            {%- endif -%}
+            {%- if elasticsearch_exporter_es_indices_settings -%}
+            --es.indices_settings \
+            {%- endif -%}
+            {%- if elasticsearch_exporter_es_shards -%}
+            --es.shards \
+            {%- endif -%}
+            {%- if elasticsearch_exporter_es_cluster_settings -%}  
+            --es.cluster_settings \
+            {%- endif -%}
+            --es.timeout {{ elasticsearch_exporter_es_timeout }} \
+            {%- if elasticsearch_exporter_es_snapshot -%}
+            --es.snapshots \
+            {%- endif -%}
+            {%- if elasticsearch_exporter_es_ssl_skip_verify -%}
+            --es.ssl-skip-verify \
+            {%- endif -%}
+            --web.listen-address {{ elasticsearch_exporter_web_listen_address }} \
+            --web.telemetry-path {{ elasticsearch_exporter_web_telemetry_path }} \
+
+[Install]
+WantedBy=multi-user.target
