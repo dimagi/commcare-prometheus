@@ -1,0 +1,27 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ haproxy_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive haproxy Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ haproxy_exporter_install_dir }}"
+    src: "{{ haproxy_exporter_url }}"
+    creates: "{{ haproxy_exporter_binary }}"
+  notify: restart haproxy exporter
+
+- name: create systemd script
+  template:
+    src: haproxy_exporter.service.j2
+    dest: /etc/systemd/system/haproxy_exporter.service
+  notify: restart haproxy exporter
+
+- meta: flush_handlers
+
+- name: make sure haproxy exporter is started
+  service:
+    name: haproxy_exporter
+    state: started
+    enabled: yes
