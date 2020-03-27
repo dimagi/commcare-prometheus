@@ -1,0 +1,6 @@
+---
+- hosts: test_kitchen
+  become: yes
+  roles:
+    - cloudalchemy.alertmanager
+    - alertmanager 

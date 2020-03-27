@@ -1,0 +1,11 @@
+---
+- hosts: test_kitchen
+  become: yes
+#  vars:
+#    grafana_security:
+#      admin_user: admin
+#      admin_password: password
+      
+  roles:
+    - cloudalchemy.grafana  
+

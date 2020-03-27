@@ -1,0 +1,7 @@
+- name: Create grafana Data directory
+  file:
+    src: "{{ grafana_data_dir }}"
+    state: directory
+    recurse: yes
+    owner: grafana
+    group: grafana

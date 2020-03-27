@@ -1,0 +1,26 @@
+- name: Create Prometheus DB directory
+  file:
+    path: "{{ prometheus_db_dir }}"
+    state: directory
+    recurse: yes
+    owner: prometheus
+    group: prometheus
+ 
+- name: Configure  Prometheus
+  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
+  tags: prometheus
+  notify: restart prometheus
+
+- name: Configure  Prometheus Node exporter target 
+  template: src=node_exporter_target.json.j2 dest=/etc/prometheus/file_sd/node_exporter_target.json
+  tags: prometheus
+  notify: restart prometheus
+
+- name: Sets /etc/hosts
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regex: '^{{ item }}.*'
+    line: "{{ item }} {{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}" 
+  with_items: "{{ groups.all }}"
+  when: prod_mode| default(False) 
