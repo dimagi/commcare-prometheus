@@ -1,0 +1,27 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ nginx_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive nginx Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ nginx_exporter_install_dir }}"
+    src: "{{ nginx_exporter_url }}"
+    creates: "{{ nginx_exporter_binary }}"
+  notify: restart nginx exporter
+
+- name: create systemd script
+  template:
+    src: nginx_exporter.service.j2
+    dest: /etc/systemd/system/nginx_exporter.service
+  notify: restart nginx exporter
+
+- meta: flush_handlers
+
+- name: make sure nginx Exporter is started
+  service:
+    name: nginx_exporter
+    state: started
+    enabled: yes
