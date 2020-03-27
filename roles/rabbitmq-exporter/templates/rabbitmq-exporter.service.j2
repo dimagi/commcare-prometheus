@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus RabbitMQ Exporter
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ rabbitmq_exporter_binary }}
+SyslogIdentifier=prometheus_rabbitmq_exporter
+Restart=always
+{% for flag, value in rabbitmq_exporter_config_flags.items() %}
+Environment={%filter upper %}{{flag}}{% endfilter %}={{value}}
+{% endfor %}
+
+[Install]
+WantedBy=multi-user.target
