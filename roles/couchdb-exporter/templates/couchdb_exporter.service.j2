@@ -1,0 +1,15 @@
+[Unit]
+Description=couchdb Exporter
+After=network.target
+
+[Service]
+ExecStart={{ couchdb_exporter_binary }} \
+          --telemetry.address {{ couchdb_exporter_listen_address }}\
+          --couchdb.uri {{ couchdb_exporter_couchdb_servers }}\
+          --couchdb.username {{ couchdb_username }}\
+          --couchdb.password {{ couchdb_password }}\
+          --databases _all_dbs
+          
+
+[Install]
+WantedBy=multi-user.target
