@@ -1,0 +1,17 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.redis -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9121",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9121"
+      {% endif %}
+      {%- endfor -%} 
+    ],
+    "labels": {
+      "job": "redis_exporter"
+    }
+  }
+]
+

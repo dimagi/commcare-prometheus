@@ -1,0 +1,17 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.proxy -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9113",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9113"
+      {% endif %}
+      {%- endfor -%} 
+    ],
+    "labels": {
+      "job": "nginx_exporter"
+    }
+  }
+]
+
