@@ -1,0 +1,16 @@
+---
+- hosts: test_kitchen
+  become: yes
+  roles:
+    - cloudalchemy.node-exporter
+    - bdellegrazie.postgres_exporter
+    - couchdb-exporter
+    - elasticsearch-exporter
+    - haproxy-exporter
+    - kafka-exporter
+    - nginx-exporter
+    - pgbouncer-exporter
+    - rabbitmq-exporter
+    - redis-exporter
+    - statsd-exporter 
+

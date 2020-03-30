@@ -1,0 +1,30 @@
+groups:
+- name: Haproxy monitoring rules
+  rules:
+  - alert: HaproxyDown
+    expr: haproxy_up == 0
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "HAProxy down (instance {{ $labels.instance }})"
+      description: "HAProxy down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: HaproxyBackendDown
+    expr: haproxy_backend_up == 0
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "HAProxy backend down (instance {{ $labels.instance }})"
+      description: "HAProxy backend is down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: HaproxyServerDown
+    expr: haproxy_server_up == 0
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "HAProxy server down (instance {{ $labels.instance }})"
+      description: "HAProxy server is down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+

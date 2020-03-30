@@ -16,13 +16,15 @@
     src: "{{ item }}"
     dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
   with_fileglob:
-    - ../templates/*_target.json.j2
+    - ../templates/targets/*.json.j2
   notify: restart prometheus
 
- - name: Copy Alert rules file
+- name: Copy Alert rules file
   copy:
-    src: "{{ role_path }}/files/rules/rules.yml"
-    dest: /etc/prometheus/rules/rules.yml
+    src: "{{ item }}"
+    dest: /etc/prometheus/rules/{{item | basename }}
+  with_fileglob:
+    - ../files/rules/*.rules  
   notify: restart prometheus
 
 - name: Sets /etc/hosts
