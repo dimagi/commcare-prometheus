@@ -12,7 +12,7 @@ platforms:
       run_command: /bin/systemd
       provision_command:
         - apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ansible/ansible
-        - apt-get update && apt-get -y -q install rsync ansible python-apt python-pycurl python-jmespath iproute2 git make
+        - apt-get update && apt-get -y -q install rsync ansible python-apt python-pycurl python-jmespath iproute2 git make postgresql pgbouncer
       use_sudo: false
 
 provisioner:
@@ -47,7 +47,7 @@ suites:
     verifier:
       patterns:
         - test/integration/grafana/serverspec/test_spec.rb
-  - name: prometheus_node_exporter    
+  - name: prometheus_exporter    
     verifier:
       patterns:
         - test/integration/prometheus_exporter/serverspec/test_spec.rb
