@@ -1,0 +1,18 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.rabbitmq -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9419",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9419"
+      {% endif %}
+      {%- endfor -%} 
+    ],
+    "labels": {
+      "job": "rabbitmq_exporter",
+      "service": "rabbitmq"
+    }
+  }
+]
+

@@ -1,0 +1,18 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.kafka -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9308",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9308"
+      {% endif %}
+      {%- endfor -%} 
+    ],
+    "labels": {
+      "job": "kafka_exporter",
+      "service": "kafka"
+    }
+  }
+]
+

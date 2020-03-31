@@ -11,9 +11,20 @@
   tags: prometheus
   notify: restart prometheus
 
-- name: Configure  Prometheus Node exporter target 
-  template: src=node_exporter_target.json.j2 dest=/etc/prometheus/file_sd/node_exporter_target.json
-  tags: prometheus
+- name: Configure Prometheus target
+  template:
+    src: "{{ item }}"
+    dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/targets/*.json.j2
+  notify: restart prometheus
+
+- name: Copy Alert rules file
+  copy:
+    src: "{{ item }}"
+    dest: /etc/prometheus/rules/{{item | basename }}
+  with_fileglob:
+    - ../files/rules/*.rules  
   notify: restart prometheus
 
 - name: Sets /etc/hosts
