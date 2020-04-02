@@ -3,7 +3,7 @@
     "targets": [
       {%- for item in groups.zookeeper -%}
       {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9381",
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9381"{% if not loop.last %},{% endif %}
       {% else %}
       "{{ hostvars[item].alt_hostname }}:9381"
       {% endif %}
@@ -19,4 +19,3 @@
     }
   }
 ]
-
