@@ -1,0 +1,22 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.zookeeper -%}
+      {% if not loop.last %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9381",
+      {% else %}
+      "{{ hostvars[item].alt_hostname }}:9381"
+      {% endif %}
+      {%- endfor -%} 
+    ],
+    "metrics_path": "/kafka",
+    "params":{
+       "zookeeper": [groups.zookeeper:2181]
+    }
+    "labels": {
+      "job": "zookeeper_exporter",
+      "service": "zookeeper"
+    }
+  }
+]
+

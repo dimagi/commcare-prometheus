@@ -13,4 +13,4 @@
     - rabbitmq-exporter
     - redis-exporter
     - statsd-exporter 
-
+    - zookeeper-exporter

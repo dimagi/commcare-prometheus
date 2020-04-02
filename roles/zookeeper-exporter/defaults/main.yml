@@ -1,0 +1,4 @@
+zookeeper_exporter_install_dir: "/opt/prometheus-exporters/zookeeper-exporter"
+zookeeper_exporter_url: "github.com/cloudflare/kafka_zookeeper_exporter"
+zookeeper_exporter_binary: "{{ zookeeper_exporter_install_dir }}/kafka_zookeeper_exporter"
+zookeeper_exporter_listen_address: ":9381" 
