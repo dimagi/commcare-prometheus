@@ -16,7 +16,7 @@
     src: "{{ ansible_env.HOME }}/go/bin/kafka_zookeeper_exporter"
     dest: "{{ zookeeper_exporter_binary }}"
     remote_src: yes
-
+    mode: preserve
 - name: create systemd script
   template:
     src: zookeeper_exporter.service.j2
