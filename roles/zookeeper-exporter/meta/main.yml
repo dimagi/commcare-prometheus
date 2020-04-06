@@ -1,0 +1,4 @@
+---
+dependencies:
+  - src: gantsign.golang
+    version: 2.3.1

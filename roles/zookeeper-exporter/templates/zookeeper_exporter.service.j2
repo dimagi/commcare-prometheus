@@ -1,0 +1,9 @@
+[Unit]
+Description=Zookeeper Exporter
+After=network.target
+
+[Service]
+ExecStart={{ zookeeper_exporter_binary }} -web.listen-address "{{ zookeeper_exporter_listen_address }}" 
+
+[Install]
+WantedBy=multi-user.target
