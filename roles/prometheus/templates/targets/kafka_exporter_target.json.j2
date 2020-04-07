@@ -2,11 +2,7 @@
   {
     "targets": [
       {%- for item in groups.kafka -%}
-      {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9308",
-      {% else %}
-      "{{ hostvars[item].alt_hostname }}:9308"
-      {% endif %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9308"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {

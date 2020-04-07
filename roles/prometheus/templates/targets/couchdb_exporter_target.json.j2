@@ -2,11 +2,7 @@
   {
     "targets": [
       {%- for item in groups.couchdb2 -%}
-      {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9984",
-      {% else %}
-      "{{ hostvars[item].alt_hostname }}:9984"
-      {% endif %}
+      {"{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9984"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {
