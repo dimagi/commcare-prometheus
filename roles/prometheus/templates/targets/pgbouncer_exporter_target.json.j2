@@ -6,10 +6,11 @@
       {%- endfor -%} 
     ],
     "labels": {
-      "job": "postgres_exporter",
+      "job": "pgbouncer_exporter",
       "service": "pgbouncer"
     }
   },
+
   {
     "targets": [
       {%- for item in groups.pg_standby -%}
@@ -17,18 +18,9 @@
       {%- endfor -%} 
     ],
     "labels": {
-      "job": "postgres_exporter",
-      "service": "pgbouncer"
-    },
-  {
-    "targets": [
-      {%- for item in groups.citusdb -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9132"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
-    "labels": {
-      "job": "postgres_exporter",
+      "job": "pgbouncer_exporter",
       "service": "pgbouncer"
     }
+  }
 ]
 

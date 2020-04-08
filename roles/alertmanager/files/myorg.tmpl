@@ -1,1 +1,4 @@
-{{ define "slack.myorg.text" }}"summary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}"{{ end}}
+{{ define "slack.myorg.text" }}
+"Summary: {{ .CommonAnnotations.summary }} 
+Description: {{ .CommonAnnotations.description }}"
+{{ end}}

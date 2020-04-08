@@ -1,2 +1,2 @@
-slack_webhook_url: https://hooks.slack.com/services/SlackWebhookAPI
+alertmanager_slack_api_url: https://hooks.slack.com/services/SlackWebhookAPI
 monitoring_env: prometheus
