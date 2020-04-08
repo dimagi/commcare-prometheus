@@ -2,11 +2,7 @@
   {
     "targets": [
       {%- for item in groups.redis -%}
-      {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9121",
-      {% else %}
-      "{{ hostvars[item].alt_hostname }}:9121"
-      {% endif %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9121"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {

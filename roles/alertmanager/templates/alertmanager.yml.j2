@@ -1,5 +1,5 @@
 global:
-  slack_api_url: "{{ slack_webhook_url }}"
+  slack_api_url: "{{ alertmanager_slack_api_url }}"
   resolve_timeout: 5m
 
 route:
@@ -15,6 +15,6 @@ templates:
 receivers:
 - name: 'slack-notifications'
   slack_configs:
-  - channel: "#alert-{{ monitoring_env }}"
+  - channel: "#alerts-{{ monitoring_env }}"
     send_resolved: true
     text: {% raw %} '{{ template "slack.myorg.text" . }}'{% endraw %}

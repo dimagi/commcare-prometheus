@@ -2,11 +2,7 @@
   {
     "targets": [
       {%- for item in groups.postgresql -%}
-      {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187",
-      {% else %}
-      "{{ hostvars[item].alt_hostname }}:9187"
-      {% endif %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {
@@ -18,11 +14,7 @@
   {
     "targets": [
       {%- for item in groups.pg_standby -%}
-      {% if not loop.last %}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187",
-      {% else %}
-      "{{ hostvars[item].alt_hostname }}:9187"
-      {% endif %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {
