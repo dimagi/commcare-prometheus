@@ -1,0 +1,34 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ kafka_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive kafka Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ kafka_exporter_install_dir }}"
+    src: "{{ kafka_exporter_url }}"
+    creates: "{{ kafka_exporter_binary }}"
+  notify: restart kafka exporter
+
+- name: create symlink to the current release
+  file:
+    src: "{{ kafka_exporter_binary }}"
+    path: "{{ kafka_exporter_symlink }}"
+    state: link
+  notify: restart kafka exporter
+
+- name: create systemd script
+  template:
+    src: kafka_exporter.service.j2
+    dest: /etc/systemd/system/kafka_exporter.service
+  notify: restart kafka exporter
+
+- meta: flush_handlers
+
+- name: make sure kafka Exporter is started
+  service:
+    name: kafka_exporter
+    state: started
+    enabled: yes

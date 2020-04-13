@@ -7,8 +7,8 @@
     ],
     "metrics_path": "/kafka",
     "params":{
-       "zookeeper": [groups.zookeeper:2181]
-    }
+       "zookeeper": [" {{ groups.zookeeper[0] }}:2181"]
+    },
     "labels": {
       "job": "zookeeper_exporter",
       "service": "zookeeper"

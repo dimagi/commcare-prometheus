@@ -1,0 +1,4 @@
+---
+dependencies:
+  - src: gantsign.golang
+    vesrion: 2.3.1

@@ -1,0 +1,12 @@
+---
+haproxy_exporter_install_dir: "/opt/prometheus-exporters/haproxy-exporter"
+haproxy_exporter_version: "0.10.0"
+haproxy_exporter_name: "haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
+haproxy_exporter_url: "https://github.com/prometheus/haproxy_exporter/releases/download/v{{ haproxy_exporter_version }}/{{ haproxy_exporter_name }}.tar.gz"
+haproxy_exporter_binary: "{{ haproxy_exporter_install_dir }}/{{ haproxy_exporter_name }}/haproxy_exporter"
+haproxy_exporter_listen_port: 9101
+haproxy_exporter_scrape_uri: "unix:/var/run/haproxy.stat"
+haproxy_exporter_timeout: "5s"
+haproxy_exporter_ssl_verify: False
+haproxy_exporter_log_level: "info"
+haproxy_exporter_pid_file: ""

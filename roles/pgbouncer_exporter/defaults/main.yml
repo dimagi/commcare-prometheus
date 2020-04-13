@@ -1,0 +1,8 @@
+---
+pgbouncer_exporter_port: 9132
+pgbouncer_exporter_host: "0.0.0.0"
+pgbouncer_exporter_binary: "/usr/local/bin/pgbouncer-exporter"
+pgbouncer_exporter_config_path: "/etc/prometheus-pgbouncer-exporter.yml"
+pgbouncer_exporter_dbuser: "devreadonly"
+pgbouncer_exporter_dbpassword: "password"
+pgbouncer_exporter_dsn: "postgresql://{{pgbouncer_exporter_dbuser}}:{{pgbouncer_exporter_dbpassword}}@localhost:6432/pgbouncer"

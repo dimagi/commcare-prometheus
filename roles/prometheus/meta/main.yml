@@ -1,0 +1,5 @@
+---
+dependencies:
+  - src: cloudalchemy.prometheus
+    version: 2.13.2
+

@@ -1,0 +1,25 @@
+---
+- name: Install Prometheus pgbouncer exporter (A Python Package)
+  pip:
+    name: prometheus-pgbouncer-exporter
+    executable: pip3
+
+- name: Create Config for pgbouncer exporter
+  template:
+    src: pgbouncer-exporter.conf.j2
+    dest: "{{ pgbouncer_exporter_config_path }}"
+  notify: restart pgbouncer exporter
+
+- name: Create systemd Service file
+  template:
+    src: pgbouncer_exporter.service.j2
+    dest: /etc/systemd/system/pgbouncer_exporter.service
+  notify: restart pgbouncer exporter
+
+- meta: flush_handlers
+
+- name: make sure pgbouncer Exporter is started
+  service:
+    name: pgbouncer_exporter
+    state: started
+    enabled: yes

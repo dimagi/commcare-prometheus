@@ -82,15 +82,6 @@ groups:
       summary: "Rabbitmq no consumer (instance {{ $labels.instance }})"
       description: "Queue has no consumer\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
-  - alert: RabbitmqTooManyConsumers
-    expr: rabbitmq_queue_consumers > 1
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Rabbitmq too many consumers (instance {{ $labels.instance }})"
-      description: "Queue should have only 1 consumer\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-
   - alert: RabbitmqUnactiveExchange
     expr: rate(rabbitmq_exchange_messages_published_in_total{exchange="my-exchange"}[1m]) < 5
     for: 5m
