@@ -4,7 +4,7 @@ airflow_exporter_url: "github.com/PBWebMedia/airflow-prometheus-exporter"
 airflow_prometheus_listen_addr: :9112
 airflow_prometheus_database_backend: postgres
 airflow_prometheus_database_host: localhost
-airfow_prometheus_database_port: 6432
+airflow_prometheus_database_port: 6432
 airflow_prometheus_database_user: airflow
 airflow_prometheus_databse_password: airflow
 airflow_prometheus_databse_name: airflow
