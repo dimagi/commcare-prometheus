@@ -1,0 +1,6 @@
+---
+- name: restart celery exporter
+  systemd: 
+    name: celery_exporter
+    state: restarted
+    daemon_reload: yes

@@ -1,5 +1,5 @@
 ---
-alertmanager_external_url: "http://{{ ansible_host }}:9093"
+alertmanager_web_external_url: "http://0.0.0.0:9093/alertmanager"
 alertmanager_slack_api_url: "http://example.org"
 alertmanager_receivers:
 - name: slack
@@ -15,8 +15,9 @@ alertmanager_route:
 
 prometheus_db_dir: /opt/data/prometheus
 prometheus_storage_retention: "365d"
-
+prometheus_web_external_url: "http://0.0.0.0:9090/prometheus"
 grafana_data_dir: /opt/data/grafana
+grafana_url: "http://0.0.0.0:3000/grafana/"
 grafana_security:
   admin_user: admin
   admin_password: password
