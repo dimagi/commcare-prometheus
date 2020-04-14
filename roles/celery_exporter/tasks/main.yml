@@ -1,7 +1,7 @@
 ---
 - name: Install Prometheus celery exporter (A Python Package)
   pip:
-    name: prometheus-celery-exporter
+    name: celery-prometheus-exporter
 
 - name: Create systemd Service file
   template:
