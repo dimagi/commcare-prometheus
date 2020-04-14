@@ -4,13 +4,14 @@
   roles:
     - cloudalchemy.node-exporter
     - bdellegrazie.postgres_exporter
-    - couchdb-exporter
-    - elasticsearch-exporter
-    - haproxy-exporter
-    - kafka-exporter
-    - nginx-exporter
-    - pgbouncer-exporter
-    - rabbitmq-exporter
-    - redis-exporter
-    - statsd-exporter 
-    - zookeeper-exporter
+    - couchdb_exporter
+    - elasticsearch_exporter
+    - haproxy_exporter
+    - kafka_exporter
+    - nginx_exporter
+    - pgbouncer_exporter
+    - rabbitmq_exporter
+    - redis_exporter
+    - statsd_exporter 
+    - zookeeper_exporter
+    - airflow_exporter
