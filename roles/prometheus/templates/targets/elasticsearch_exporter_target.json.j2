@@ -1,10 +1,6 @@
 [
   {
-    "targets": [
-      {%- for item in groups.elasticsearch -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9108"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
+    "targets": ["{{ hostvars[groups.elasticsearch.0].alt_hostname | default(hostvars[groups.elasticsearch.0].hostname) }}:9108"],
     "labels": {
       "job": "elasticsearch_exporter",
       "service": "elasticsearch"

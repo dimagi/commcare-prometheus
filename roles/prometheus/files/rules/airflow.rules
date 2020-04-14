@@ -1,9 +1,10 @@
 groups:
-- name: Alerting rules for Nginx 
+- name: Alerting rules for Airflow 
   rules:
-  - alert: NginxDownAlert
-    expr: absent(nginx_up) or nginx_up < 1
+  - alert: AirflowDownAlert
+    expr: absent(airflow_up) or airflow_up < 1
     for: 1m
     annotations:
       summary: "Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+

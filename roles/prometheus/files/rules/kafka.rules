@@ -2,7 +2,7 @@ groups:
 - name: Kafka alerting rules
   rules:
   - alert: KafkaTopicsReplicas
-    expr: sum(kafka_topic_partition_in_sync_replica) by (topic) < 3
+    expr: sum(kafka_topic_partition_in_sync_replica) by (topic) < 2
     for: 5m
     labels:
       severity: error

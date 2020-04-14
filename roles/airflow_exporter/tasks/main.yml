@@ -1,0 +1,31 @@
+- name: ensure Prometheus exporter directory exist
+  file:
+    path: "{{ airflow_exporter_install_dir }}"
+    state: directory
+
+- name: Get the exporter package
+  shell: "{{ golang_install_dir }}/bin/go get -u {{ airflow_exporter_url }}"
+  args:
+    executable: /bin/bash
+
+- name: Move airflow build package to exporter directory
+  copy:
+    src: "{{ ansible_env.HOME }}/go/bin/airflow-prometheus-exporter"
+    dest: "{{ airflow_exporter_binary }}"
+    remote_src: yes
+    mode: preserve
+
+- name: create systemd script
+  template:
+    src: airflow_exporter.service.j2
+    dest: /etc/systemd/system/airflow_exporter.service
+  notify: restart airflow exporter
+
+- meta: flush_handlers
+
+- name: Make sure airflw exporter is started
+  service:
+    name: airflow_exporter
+    state: started
+    enabled: yes
+

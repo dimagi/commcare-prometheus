@@ -1,10 +1,6 @@
 [
   {
-    "targets": [
-      {%- for item in groups.couchdb2 -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9984"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
+    "targets": ["{{ hostvars[groups.couchdb2.0].alt_hostname | default(hostvars[groups.couchdb2.0].hostname) }}:9984"],
     "labels": {
       "job": "couchdb_exporter",
       "service": "couchdb2"

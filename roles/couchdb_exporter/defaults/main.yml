@@ -1,0 +1,11 @@
+---
+couchdb_exporter_install_dir: "/opt/prometheus-exporters/couchdb-prometheus-exporter"
+couchdb_exporter_version: "27.0.0"
+couchdb_exporter_name: "couchdb-prometheus-exporter"
+couchdb_exporter_url: "https://github.com/gesellix/couchdb-prometheus-exporter/releases/download/v{{ couchdb_exporter_version }}/couchdb-prometheus-exporter_{{ couchdb_exporter_version }}_Linux_x86_64.tar.gz"
+couchdb_exporter_binary: "{{ couchdb_exporter_install_dir }}/{{ couchdb_exporter_name }}"
+couchdb_exporter_port: 9984
+couchdb_exporter_listen_address: "0.0.0.0:{{ couchdb_exporter_port }}"
+couchdb_exporter_couchdb_server: "http://{{ ansible_default_ipv4.address }}:15984"
+couchdb_username: "username"
+couchdb_password: "password"

@@ -1,6 +1,0 @@
----
-- name: restart pgbouncer exporter
-  systemd:
-    name: prometheus-pgbouncer-exporter
-    state: restarted
-    daemon_reload: yes

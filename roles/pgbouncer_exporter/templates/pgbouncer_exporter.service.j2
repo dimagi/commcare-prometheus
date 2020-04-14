@@ -1,0 +1,9 @@
+[Unit]
+Description=Prometheus pgbouncer Exporter
+After=network.target
+
+[Service]
+ExecStart={{ pgbouncer_exporter_binary }} --config {{ pgbouncer_exporter_config_path }}
+
+[Install]
+WantedBy=multi-user.target
