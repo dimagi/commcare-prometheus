@@ -7,7 +7,7 @@ Type=simple
 
 Environment=AIRFLOW_PROMETHEUS_LISTEN_ADDR={{ airflow_prometheus_listen_addr }}
 Environment=AIRFLOW_PROMETHEUS_DATABASE_BACKEND={{ airflow_prometheus_database_backend }}
-Environment=AIRFLOW_PROMETHEUS_DATABASE_HOST={{ aiflow_prometheus_database_host }}
+Environment=AIRFLOW_PROMETHEUS_DATABASE_HOST={{ airflow_prometheus_database_host }}
 Environment=AIRFLOW_PROMETHEUS_DATABASE_PORT={{ airfow_prometheus_database_port }}
 Environment=AIRFLOW_PROMETHEUS_DATABASE_USER={{ airflow_prometheus_database_user }}
 Environment=AIRFLOW_PROMETHEUS_DATABASE_PASSWORD={{ airflow_prometheus_databse_password }}
@@ -17,4 +17,3 @@ ExecStart={{ airflow_exporter_binary }}
 
 [Install]
 WantedBy=multi-user.target
-
