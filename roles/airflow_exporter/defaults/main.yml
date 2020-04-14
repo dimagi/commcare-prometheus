@@ -7,4 +7,4 @@ airflow_prometheus_database_host: localhost
 airflow_prometheus_database_port: 6432
 airflow_prometheus_database_user: airflow
 airflow_prometheus_database_password: airflow
-airflow_prometheus_databse_name: airflow
+airflow_prometheus_database_name: airflow
