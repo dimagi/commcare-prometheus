@@ -2,7 +2,7 @@
   {
     "targets": [
       {%- for item in groups.logproxy -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9125"{% if not loop.last %},{% endif %}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9102"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {

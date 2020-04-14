@@ -1,0 +1,12 @@
+[Unit]
+Description=Celery Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+
+ExecStart={{ celery_exporter_binary }} --broker {{celery_exporter_broker_url}} --addr {{celery_exporter_bind_address}}
+
+[Install]
+WantedBy=multi-user.target
+

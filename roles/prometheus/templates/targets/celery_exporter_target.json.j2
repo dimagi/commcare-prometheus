@@ -1,0 +1,10 @@
+[
+  {
+    "targets": ["{{ hostvars[groups.celery.0].alt_hostname | default(hostvars[groups.celery.0].hostname) }}:9188"],
+    "labels": {
+      "job": "celery_exporter",
+      "service": "celery"
+    }
+  }
+]
+

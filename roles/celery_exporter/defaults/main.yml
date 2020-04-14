@@ -1,0 +1,3 @@
+celery_exporter_binary: "/usr/local/bin/celery-prometheus-exporter"
+celery_exporter_bind_address: "0.0.0.0:9188"
+celery_exporter_broker_url: "amqp://amqp:amqp@localhost:5672/amqp"

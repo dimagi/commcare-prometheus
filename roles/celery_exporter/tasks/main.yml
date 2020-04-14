@@ -1,0 +1,18 @@
+---
+- name: Install Prometheus celery exporter (A Python Package)
+  pip:
+    name: celery-prometheus-exporter
+
+- name: Create systemd Service file
+  template:
+    src: celery_exporter.service.j2
+    dest: /etc/systemd/system/celery_exporter.service
+  notify: restart celery exporter
+
+- meta: flush_handlers
+
+- name: make sure celery exporter is started
+  service:
+    name: celery_exporter
+    state: started
+    enabled: yes
