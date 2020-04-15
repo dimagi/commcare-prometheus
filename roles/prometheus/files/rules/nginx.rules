@@ -5,5 +5,5 @@ groups:
     expr: absent(nginx_up) or nginx_up < 1
     for: 1m
     annotations:
-      summary: "Instance {{ $labels.instance }} down"
+      summary: "NGINX is down on Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
