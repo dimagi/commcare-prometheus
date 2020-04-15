@@ -7,8 +7,8 @@ groups:
     labels:
       severity: error
     annotations:
-      summary: "HAProxy down (instance {{ $labels.instance }})"
-      description: "HAProxy down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      summary: "HAProxy down on (instance {{ $labels.instance }})"
+      description: "HAProxy has been down for more than 5 minutes "
 
   - alert: HaproxyBackendDown
     expr: haproxy_backend_up == 0
@@ -17,7 +17,7 @@ groups:
       severity: error
     annotations:
       summary: "HAProxy backend down (instance {{ $labels.instance }})"
-      description: "HAProxy backend is down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      description: "HAProxy backend is down for more than 5 minutes"
 
   - alert: HaproxyServerDown
     expr: haproxy_server_up == 0
@@ -26,5 +26,5 @@ groups:
       severity: error
     annotations:
       summary: "HAProxy server down (instance {{ $labels.instance }})"
-      description: "HAProxy server is down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      description: "HAProxy Backend server is down."
 

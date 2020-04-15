@@ -8,7 +8,7 @@ groups:
       severity: error
     annotations:
       summary: "Kafka topics replicas (instance {{ $labels.instance }})"
-      description: "Kafka topic in-sync partition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      description: "Kafka topic in-sync partition\n  Topic = {{ $value }}"
 
   - alert: KafkaConsumersGroup
     expr: sum(kafka_consumergroup_lag) by (consumergroup) > 50
@@ -16,5 +16,5 @@ groups:
     labels:
       severity: error
     annotations:
-      summary: "Kafka consumers group (instance {{ $labels.instance }})"
-      description: "Kafka consumers group\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      summary: "Kafka consumers group  lag on (instance {{ $labels.instance }})"
+      description: "Kafka consumers group is behind . Current value = {{ $value }}"

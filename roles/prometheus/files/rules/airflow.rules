@@ -5,6 +5,6 @@ groups:
     expr: absent(airflow_up) or airflow_up < 1
     for: 1m
     annotations:
-      summary: "Instance {{ $labels.instance }} down"
+      summary: "Airflow on Instance {{ $labels.instance }} is down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
 
