@@ -1,0 +1,8 @@
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: proxy
+    url: 'http://{{ groups.prometheus.0 }}/prometheus'
+    basicAuth: false
+grafana_dashboards_dir: "files/dashboards/"
+

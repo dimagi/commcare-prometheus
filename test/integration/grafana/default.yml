@@ -2,5 +2,5 @@
 - hosts: test_kitchen
   become: yes
   roles:
-    - cloudalchemy.grafana  
+    - grafana  
 
