@@ -19,10 +19,15 @@ scrape_configs:
     metrics_path: /prometheus/metrics
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: 'dummy' # it's mandatory
-    file_sd_configs:
-      - files:
-        - /etc/prometheus/file_sd/*.json
+  - job_name: blackbox
+    metrics_path: /probe
+    params:
+      module: [http_prometheus]
+    static_configs:
+      - targets:
+{%- for url in probe_url %}        
+         - {{ url }}
+{% endfor %}
   - job_name: kafka_zookeeper_exporter
     static_configs:
       - targets: ["{{ groups.zookeeper.0 }}:9381"]
@@ -30,6 +35,10 @@ scrape_configs:
     scheme: http
     params:
       zookeeper: ["{{ groups.zookeeper.0 }}:2181"]
+  - job_name: 'dummy' # it's mandatory
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/file_sd/*.json
 
     relabel_configs:
       - source_labels: ['__address__']

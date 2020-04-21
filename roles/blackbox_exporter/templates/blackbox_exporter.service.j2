@@ -1,0 +1,12 @@
+[Unit]
+Description=Blackbox Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+
+ExecStart={{ blackbox_exporter_binary }} --config.file {{ blackbox_exporter_config }} --web.listen-address {{ blackbox_exporter_bind_address }} 
+
+[Install]
+WantedBy=multi-user.target
+
