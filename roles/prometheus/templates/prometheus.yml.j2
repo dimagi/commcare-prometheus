@@ -25,9 +25,16 @@ scrape_configs:
       module: [http_prometheus]
     static_configs:
       - targets:
-{%- for url in probe_url %}        
+{%- for url in prometheus_http_probe_urls %}        
          - {{ url }}
 {% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ ansible_default_ipv4.address }}:9115
   - job_name: kafka_zookeeper_exporter
     static_configs:
       - targets: ["{{ groups.zookeeper.0 }}:9381"]
