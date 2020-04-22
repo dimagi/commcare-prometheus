@@ -7,3 +7,20 @@ groups:
     annotations:
       summary: "NGINX is down on Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+
+  - alert: ProbeFailing
+    expr: up{job="blackbox"} == 0 or probe_success{job="blackbox"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint  {{ $labels.instance }} is down"
+
+  - alert: SSLCertExpiringSoon
+    expr: probe_ssl_earliest_cert_expiry{job="blackbox"} - time() < 86400 * 30
+    for: 10m
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "Cert is about to expire for {{ $labels.instance }} "
+

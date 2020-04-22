@@ -1,0 +1,34 @@
+---
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ blackbox_exporter_install_dir }}"
+    state: directory
+
+- name: unarchive blackbox Exporter
+  unarchive:
+    remote_src: yes
+    dest: "{{ blackbox_exporter_install_dir }}"
+    src: "{{ blackbox_exporter_url }}"
+    creates: "{{ blackbox_exporter_binary }}"
+  notify: restart blackbox exporter
+
+- name: Create Config for blackbox exporter
+  template:
+    src: blackbox_exporter_config.yml.j2
+    dest: "{{ blackbox_exporter_config }}"
+  notify: restart blackbox exporter
+
+- name: create systemd script
+  template:
+    src: blackbox_exporter.service.j2
+    dest: /etc/systemd/system/blackbox_exporter.service
+  notify: restart blackbox exporter
+
+- meta: flush_handlers
+
+- name: make sure blackbox exporter is started
+  service:
+    name: blackbox_exporter
+    state: started
+    enabled: yes
+

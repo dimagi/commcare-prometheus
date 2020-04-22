@@ -16,3 +16,4 @@
     - zookeeper_exporter
     - airflow_exporter
     - celery_exporter
+    - blackbox_exporter
