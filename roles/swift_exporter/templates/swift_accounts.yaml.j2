@@ -1,0 +1,8 @@
+swift_accounts:
+{% for account in swift_accounts %}
+  - user: {{ account.user }}
+    key: {{ account.key }}
+    authurl: {{ account.authurl }}
+    tag: {{ account.tag }}
+{% endfor %}
+listen_port: {{ swift_exporter_bind_port }}
