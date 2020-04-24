@@ -52,15 +52,15 @@ def calculate_container_size(resp_headers,containers):
 
 ## Prometheus_metrics conversion
 def prometheus_metrics(container_obj):
-    for obj in container_obj:
-        if container_obj[obj]['can_connect'] == 1:
-            gauge_container_count.labels(account_tags=obj).set(container_obj[obj]['container_count'])
-            gauge_object_count.labels(account_tags=obj).set(container_obj[obj]['object_count'])
-            gauge_used_bytes.labels(account_tags=obj).set(container_obj[obj]['used_bytes'])
-            gauge_quota_bytes.labels(account_tags=obj).set(container_obj[obj]['quota_bytes'])
-            gauge_container_connect.labels(account_tags=obj).set(container_obj[obj]['can_connect'])
+    for tag, account in container_obj:
+        if account['can_connect'] == 1:
+            gauge_container_count.labels(account_tags=tag).set(account['container_count'])
+            gauge_object_count.labels(account_tags=tag).set(account['object_count'])
+            gauge_used_bytes.labels(account_tags=tag).set(account['used_bytes'])
+            gauge_quota_bytes.labels(account_tags=tag).set(account['quota_bytes'])
+            gauge_container_connect.labels(account_tags=tag).set(account['can_connect'])
         else:
-            gauge_container_connect.labels(account_tags=obj).set(container_obj[obj]['can_connect'])
+            gauge_container_connect.labels(account_tags=tag).set(account['can_connect'])
 
 # Main Funtion
 if __name__ == "__main__": 
