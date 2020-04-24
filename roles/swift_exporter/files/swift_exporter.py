@@ -75,7 +75,7 @@ if __name__ == "__main__":
             jsonobj = defaultdict(list)
             resp_headers, containers = swift_connect(obj['user'], obj['key'], obj['authurl'])
             if resp_headers and containers:
-                container_count,object_count,used_bytes,quota_bytes = calculate_container_size(resp_headers,containers)
+                container_count, object_count, used_bytes, quota_bytes = calculate_container_size(resp_headers, containers)
                 jsonobj['object_count'] = object_count
                 jsonobj['container_count'] = container_count
                 jsonobj['used_bytes'] =  used_bytes
