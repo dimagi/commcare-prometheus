@@ -73,7 +73,7 @@ if __name__ == "__main__":
         container_dict = defaultdict(list)
         for obj in config_obj['swift_accounts']:
             jsonobj = defaultdict(list)
-            resp_headers,containers = swift_connect(obj['user'],obj['key'],obj['authurl'])
+            resp_headers, containers = swift_connect(obj['user'], obj['key'], obj['authurl'])
             if resp_headers and containers:
                 container_count,object_count,used_bytes,quota_bytes = calculate_container_size(resp_headers,containers)
                 jsonobj['object_count'] = object_count
@@ -87,4 +87,3 @@ if __name__ == "__main__":
                 container_dict[obj['tag']] =jsonobj
         prometheus_metrics(container_dict)
         time.sleep(20)
-
