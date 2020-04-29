@@ -1,0 +1,12 @@
+[Unit]
+Description=Swift Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+
+ExecStart={{ swift_exporter_binary }}
+
+[Install]
+WantedBy=multi-user.target
+

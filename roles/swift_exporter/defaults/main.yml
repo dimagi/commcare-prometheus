@@ -1,0 +1,18 @@
+swift_exporter_install_dir: "/opt/prometheus-exporters/swift-exporter"
+swift_exporter_bind_port: 9188
+swift_exporter_config_file: "/etc/swift_accounts.yaml"
+swift_exporter_binary: "{{ swift_exporter_install_dir }}/swift_exporter"
+swift_exporter_dependencies:
+  - python3-yaml
+  - python3-swiftclient
+  - python3-prometheus-client
+swift_accounts:
+  - user: 'test'
+    key: 'test'
+    authurl: 'url1'
+    tag: 'formcontainer'
+  - user: 'test2'
+    key: 'test2'
+    authurl: 'url2'
+    tag: 'backupcontainer'
+

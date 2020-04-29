@@ -17,3 +17,4 @@
     - airflow_exporter
     - celery_exporter
     - blackbox_exporter
+    - swift_exporter

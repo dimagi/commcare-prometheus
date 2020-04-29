@@ -1,0 +1,37 @@
+- name: Install swift exporter dependencies
+  apt: 
+    name: "{{ swift_exporter_dependencies }}"
+    state: present 
+
+- name: ensure Prometheus exporters directory exist
+  file:
+    path: "{{ swift_exporter_install_dir }}"
+    state: directory
+
+- name: Copy Swift exporter python file
+  copy:
+    src: files/swift_exporter.py
+    dest: "{{ swift_exporter_binary }}"
+    mode: '0755
+    '
+- name: Create systemd Service file
+  template:
+    src: swift_exporter.service.j2
+    dest: /etc/systemd/system/swift_exporter.service
+  notify: restart swift exporter
+
+- name: Create swift config file
+  template:
+    src: swift_accounts.yaml.j2
+    dest: "{{ swift_exporter_config_file }}"
+  notify: restart swift exporter
+
+
+- meta: flush_handlers
+
+- name: make sure swift exporter is started
+  service:
+    name: swift_exporter
+    state: started
+    enabled: yes
+
