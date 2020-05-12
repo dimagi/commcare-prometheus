@@ -4,6 +4,8 @@ groups:
   - alert: NginxDownAlert
     expr: absent(nginx_up) or nginx_up < 1
     for: 1m
+    labels:
+      severity: critical
     annotations:
       summary: "NGINX is down on Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
@@ -14,7 +16,8 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: "Endpoint  {{ $labels.instance }} is down"
+      summary: "Endpoint  {{ $labels.instance }} is down."
+      description: "{{ $labels.instance }} is down."
 
   - alert: SSLCertExpiringSoon
     expr: probe_ssl_earliest_cert_expiry{job="blackbox"} - time() < 86400 * 30
@@ -23,4 +26,4 @@ groups:
       severity: "critical"
     annotations:
       summary: "Cert is about to expire for {{ $labels.instance }} "
-
+      description: "SSL Certificate for {{ $labels.instance }} is about to expired."

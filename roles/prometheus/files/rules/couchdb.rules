@@ -4,6 +4,8 @@ groups:
   - alert: CouchDBDownAlert
     expr: absent(couchdb_httpd_up) or couchdb_httpd_up < 1
     for: 1m
+    labels:
+      severity: critical
     annotations:
       summary: "CouchDB on Instance {{ $labels.instance }} is down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."

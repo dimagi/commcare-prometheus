@@ -20,6 +20,11 @@
   notify: restart prometheus
   tags: prometheus_targets
 
+- name: Remove default alert rules file
+  file:
+    path: /etc/prometheus/rules/ansible_managed.rules
+    state: absent
+
 - name: Copy Alert rules file
   copy:
     src: "{{ item }}"

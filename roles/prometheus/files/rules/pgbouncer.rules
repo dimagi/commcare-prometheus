@@ -8,8 +8,8 @@ groups:
       summary: "PGBouncer is down on Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
 
-  - alert: PgbouncerActiveConnectinos
-    expr: pgbouncer_pools_server_active_connections > 200
+  - alert: PgbouncerWaitingConnectinos
+    expr: pgbouncer_pools_client_waiting_connections > 10
     for: 5m
     labels:
       severity: warning
