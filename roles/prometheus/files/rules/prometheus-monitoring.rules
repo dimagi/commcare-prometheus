@@ -5,7 +5,7 @@ groups:
     expr: up == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus target missing (instance {{ $labels.instance }})"
       description: "A Prometheus target has disappeared. An exporter might be crashed."
@@ -14,7 +14,7 @@ groups:
     expr: count by (job) (up) == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus all targets missing (instance {{ $labels.instance }})"
       description: "A Prometheus job does not have living target anymore."
@@ -59,7 +59,7 @@ groups:
     expr: vector(1)
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus AlertManager E2E dead man switch (instance {{ $labels.instance }})"
       description: "Prometheus DeadManSwitch is an always-firing alert. It's used as an end-to-end test of Prometheus through the Alertmanager.}"
@@ -68,7 +68,7 @@ groups:
     expr: prometheus_notifications_alertmanagers_discovered < 1
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus not connected to alertmanager (instance {{ $labels.instance }})"
       description: "Prometheus cannot connect the alertmanager."
@@ -77,7 +77,7 @@ groups:
     expr: increase(prometheus_rule_evaluation_failures_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus rule evaluation failures (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} rule evaluation failures, leading to potentially ignored alerts."
@@ -86,7 +86,7 @@ groups:
     expr: increase(prometheus_template_text_expansion_failures_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus template text expansion failures (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} template text expansion failures."
@@ -113,7 +113,7 @@ groups:
     expr: rate(alertmanager_notifications_failed_total[1m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus AlertManager notification failing (instance {{ $labels.instance }})"
       description: "Alertmanager is failing sending notifications."
@@ -122,7 +122,7 @@ groups:
     expr: prometheus_sd_discovered_targets == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus target empty (instance {{ $labels.instance }})"
       description: "Prometheus has no target in service discovery."
@@ -158,7 +158,7 @@ groups:
     expr: increase(prometheus_tsdb_checkpoint_creations_failed_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB checkpoint creation failures (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} checkpoint creation failures."
@@ -167,7 +167,7 @@ groups:
     expr: increase(prometheus_tsdb_checkpoint_deletions_failed_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB checkpoint deletion failures (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} checkpoint deletion failures."
@@ -176,7 +176,7 @@ groups:
     expr: increase(prometheus_tsdb_compactions_failed_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB compactions failed (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB compactions failures."
@@ -185,7 +185,7 @@ groups:
     expr: increase(prometheus_tsdb_head_truncations_failed_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB head truncations failed (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB head truncation failures."
@@ -194,7 +194,7 @@ groups:
     expr: increase(prometheus_tsdb_reloads_failures_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB reload failures (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB reload failures."
@@ -203,7 +203,7 @@ groups:
     expr: increase(prometheus_tsdb_wal_corruptions_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB WAL corruptions (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB WAL corruptions."
@@ -212,7 +212,7 @@ groups:
     expr: increase(prometheus_tsdb_wal_truncations_failed_total[3m]) > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Prometheus TSDB WAL truncations failed (instance {{ $labels.instance }})"
       description: "Prometheus encountered {{ $value }} TSDB WAL truncation failures."

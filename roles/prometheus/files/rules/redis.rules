@@ -5,7 +5,7 @@ groups:
     expr: redis_up == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Redis down  on (instance {{ $labels.instance }})"
       description: "Redis instance is down for 5 min."
@@ -14,7 +14,7 @@ groups:
     expr: count(redis_instance_info{role="master"}) == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Redis missing master (instance {{ $labels.instance }})"
       description: "Redis cluster has no node marked as master"
@@ -23,7 +23,7 @@ groups:
     expr: count(redis_instance_info{role="master"}) > 1
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Redis too many masters (instance {{ $labels.instance }})"
       description: "Redis cluster has too many nodes marked as master."
@@ -32,7 +32,7 @@ groups:
     expr: count without (instance, job) (redis_connected_slaves) - sum without (instance, job) (redis_connected_slaves) - 1 > 1
     for: 5m
     labels:
-      severity: error
+      severity: warning
     annotations:
       summary: "Redis disconnected slaves (instance {{ $labels.instance }})"
       description: "Redis not replicating for all slaves. Consider reviewing the redis replication status."
@@ -41,40 +41,22 @@ groups:
     expr: delta(redis_connected_slaves[1m]) < 0
     for: 5m
     labels:
-      severity: error
+      severity: warning
     annotations:
       summary: "Redis replication broken (instance {{ $labels.instance }})"
       description: "Redis instance lost a slave."
-
-  - alert: RedisClusterFlapping
-    expr: changes(redis_connected_slaves[5m]) > 2
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Redis cluster flapping (instance {{ $labels.instance }})"
-      description: "Changes have been detected in Redis replica connection. This can occur when replica nodes lose connection to the master and reconnect (a.k.a flapping)."
-
-  - alert: RedisMissingBackup
-    expr: time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 24
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Redis missing backup (instance {{ $labels.instance }})"
-      description: "Redis has not been backuped for > 24 hours."
 
   - alert: RedisOutOfMemory
     expr: redis_memory_used_bytes / redis_total_system_memory_bytes * 100 > 90
     for: 5m
     labels:
-      severity: warning
+      severity: critical
     annotations:
       summary: "Redis out of memory (instance {{ $labels.instance }})"
       description: "Redis is running out of memory (> 90%)."
 
   - alert: RedisTooManyConnections
-    expr: redis_connected_clients > 3000
+    expr: redis_connected_clients > 6000
     for: 5m
     labels:
       severity: warning
@@ -83,20 +65,10 @@ groups:
       description: "Redis instance has too many connections\n  Current Count = {{ $value }}"
 
   - alert: RedisNotEnoughConnections
-    expr: redis_connected_clients < 5
+    expr: redis_connected_clients < 100
     for: 5m
     labels:
       severity: warning
     annotations:
       summary: "Redis not enough connections (instance {{ $labels.instance }})"
       description: "Redis instance should have more connections (> 5)\n  Current Count = {{ $value }}"
-
-  - alert: RedisRejectedConnections
-    expr: increase(redis_rejected_connections_total[1m]) > 0
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Redis rejected connections (instance {{ $labels.instance }})"
-      description: "Some connections to Redis has been rejected\n  Current Count = {{ $value }}"
-

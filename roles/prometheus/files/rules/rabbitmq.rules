@@ -5,7 +5,7 @@ groups:
     expr: rabbitmq_up == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Rabbitmq down  (instance {{ $labels.instance }})"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
@@ -14,19 +14,10 @@ groups:
     expr: sum(rabbitmq_running) < 2
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Rabbitmq cluster down (instance {{ $labels.instance }})"
       description: "Less than 2 nodes running in RabbitMQ cluster."
-
-  - alert: RabbitmqClusterPartition
-    expr: rabbitmq_partitions > 0
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Rabbitmq cluster partition (instance {{ $labels.instance }})"
-      description: "Cluster partition\n  Num of partition = {{ $value }}"
 
   - alert: RabbitmqOutOfMemory
     expr: rabbitmq_node_mem_used / rabbitmq_node_mem_limit * 100 > 90
@@ -37,47 +28,11 @@ groups:
       summary: "Rabbitmq out of memory (instance {{ $labels.instance }})"
       description: "Memory available for RabbmitMQ is low (< 10%)"
 
-  - alert: RabbitmqTooManyConnections
-    expr: rabbitmq_connectionsTotal > 1000
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Rabbitmq too many connections (instance {{ $labels.instance }})"
-      description: "RabbitMQ instance has too many connections (> 1000)\n  Current connections = {{ $value }}"
-
-  - alert: RabbitmqDeadLetterQueueFillingUp
-    expr: rabbitmq_queue_messages{queue="my-dead-letter-queue"} > 10
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Rabbitmq dead letter queue filling up (instance {{ $labels.instance }})"
-      description: "Dead letter queue is filling up (> 10 msgs)\n  Current size = {{ $value }}"
-
   - alert: RabbitmqTooManyMessagesInQueue
-    expr: sum(rate(rabbitmq_queue_message_bytes_ready{cluster="rabbit@rabbit0.internal-icds-cloud.commcarehq.org"}[1m])) by (queue) > 1000
+    expr: sum(rate(rabbitmq_queue_message_bytes_ready{cluster="rabbit@rabbit0.internal-icds-cloud.commcarehq.org"}[1m])) by (queue) > 2000
     for: 5m
     labels:
       severity: warning
     annotations:
       summary: "Rabbitmq too many messages in queue {{ $labels.queue }})"
       description: "Queue is filling up (> 1000 msgs)\n  Current Queue size = {{ $value }}"
-
-  - alert: RabbitmqSlowQueueConsuming
-    expr: time() - rabbitmq_queue_head_message_timestamp{queue="my-queue"} > 60
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Rabbitmq slow queue consuming (instance {{ $labels.instance }})"
-      description: "Queue messages are consumed slowly (> 60s)\n  Current Queue size = {{ $value }}"
-
-  - alert: RabbitmqNoConsumer
-    expr: rabbitmq_queue_consumers == 0
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "Rabbitmq no consumer (instance {{ $labels.instance }})"
-      description: "Queue has no consumer."

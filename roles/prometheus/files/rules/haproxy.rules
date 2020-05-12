@@ -5,25 +5,16 @@ groups:
     expr: haproxy_up == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "HAProxy down on (instance {{ $labels.instance }})"
       description: "HAProxy has been down for more than 5 minutes "
-
-  - alert: HaproxyBackendDown
-    expr: haproxy_backend_up == 0
-    for: 5m
-    labels:
-      severity: error
-    annotations:
-      summary: "HAProxy backend down (instance {{ $labels.instance }})"
-      description: "HAProxy backend is down for more than 5 minutes"
 
   - alert: HaproxyServerDown
     expr: haproxy_server_up == 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "HAProxy server down (instance {{ $labels.instance }})"
       description: "HAProxy Backend server is down."

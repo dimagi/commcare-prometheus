@@ -1,11 +1,20 @@
 groups:
 - name: Kafka alerting rules
   rules:
+  - alert: KafkaDown
+    expr: node_systemd_unit_state{name =~ "kafka-server.service",state="failed"} > 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Kafka is down on Instance {{ $labels.instance }} "
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+
   - alert: KafkaTopicsReplicas
-    expr: sum(kafka_topic_partition_in_sync_replica) by (topic) < 2
+    expr: sum(kafka_topic_partition_in_sync_replica{topic != "meta",topic != "group"}) by (topic) < 2
     for: 5m
     labels:
-      severity: error
+      severity: warning
     annotations:
       summary: "Kafka topics replicas (instance {{ $labels.instance }})"
       description: "Kafka topic in-sync partition\n  Topic = {{ $value }}"
@@ -14,7 +23,7 @@ groups:
     expr: sum(kafka_consumergroup_lag) by (consumergroup) > 50
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Kafka consumers group  lag on (instance {{ $labels.instance }})"
       description: "Kafka consumers group is behind . Current value = {{ $value }}"
