@@ -3,6 +3,7 @@
     "targets": ["{{ hostvars[groups.kafka.0].alt_hostname | default(hostvars[groups.kafka.0].hostname) }}:9308"],
     "labels": {
       "job": "kafka_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "kafka"
     }
   }

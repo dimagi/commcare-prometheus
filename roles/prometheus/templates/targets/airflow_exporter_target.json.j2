@@ -3,6 +3,7 @@
     "targets": ["{{ hostvars[groups.airflow.0].alt_hostname | default(hostvars[groups.airflow.0].hostname) }}:9112"],
     "labels": {
       "job": "airflow_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "airflow"
     }
   }

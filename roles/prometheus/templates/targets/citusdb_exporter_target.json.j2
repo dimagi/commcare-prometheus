@@ -1,24 +1,13 @@
 [
   {
     "targets": [
-      {%- for item in groups.citusdb_pg_master -%}
+      {%- for item in groups.citusdb -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {
       "job": "postgres_exporter",
-      "service": "citusdb"
-    }
-  },
-
-  {
-    "targets": [
-      {%- for item in groups.citusdb_pg_standby -%}
-     "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
-    "labels": {
-      "job": "postgres_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "citusdb"
     }
   }

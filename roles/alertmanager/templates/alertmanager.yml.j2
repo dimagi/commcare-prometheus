@@ -1,3 +1,7 @@
+#
+#{{ansible_managed}}
+#
+
 global:
   slack_api_url: "{{ alertmanager_slack_api_url }}"
   resolve_timeout: 5m
@@ -7,7 +11,7 @@ route:
   group_by: ['alertname','instance', 'severity']
   group_wait: 30s
   group_interval: 5m
-  repeat_interval: 1h
+  repeat_interval: 15m
 
 templates:
 - '/etc/alertmanager/templates/myorg.tmpl'
@@ -15,7 +19,7 @@ templates:
 receivers:
 - name: 'slack-notifications'
   slack_configs:
-  - channel: "#alerts-{{ monitoring_env }}"
+  - channel: "{{ prometheus_monitoring_slack_channel }}"
     send_resolved: true
     icon_url: https://avatars3.githubusercontent.com/u/3380462
     title: {% raw %} '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] Prometheus Notification  ( {{ .CommonLabels.alertname }} )' {% endraw %} 

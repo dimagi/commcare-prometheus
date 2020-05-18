@@ -24,4 +24,16 @@ grafana_security:
 
 prometheus_http_probe_urls:
   - 127.0.0.1:9090
+  - 127.0.0.1:3000
 node_exporter_enabled_collectors: ['systemd','ntp','processes','supervisord']
+swift_accounts:
+  - user: 'test'
+    key: 'test'
+    authurl: 'url1'
+    tag: 'formcontainer'
+  - user: 'test2'
+    key: 'test2'
+    authurl: 'url2'
+    tag: 'backupcontainer'
+prometheus_federation:
+  - 10.0.0.1:9090

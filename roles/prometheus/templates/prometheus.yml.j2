@@ -3,12 +3,12 @@
 #
 
 global:
-  evaluation_interval: 15s
+  evaluation_interval: 30s
   scrape_interval: 20s
   scrape_timeout: 20s
 
   external_labels:
-    environment: {{ monitoring_env }} 
+    environment: {{ prometheus_monitoring_env }} 
 
 rule_files:
   - /etc/prometheus/rules/*.rules
@@ -19,6 +19,9 @@ scrape_configs:
     metrics_path: /prometheus/metrics
     static_configs:
       - targets: ['localhost:9090']
+        labels:
+          environment: {{ prometheus_monitoring_env }}
+{% if prometheus_http_probe_urls is defined %}      
   - job_name: blackbox
     metrics_path: /probe
     params:
@@ -28,6 +31,8 @@ scrape_configs:
 {%- for url in prometheus_http_probe_urls %}        
          - {{ url }}
 {% endfor %}
+        labels:
+          environment: {{ prometheus_monitoring_env }}
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -35,9 +40,12 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: {{ ansible_default_ipv4.address }}:9115
+{% endif %}        
   - job_name: kafka_zookeeper_exporter
     static_configs:
       - targets: ["{{ groups.zookeeper.0 }}:9381"]
+        labels:
+          environment: {{ prometheus_monitoring_env }}
     metrics_path: /kafka
     scheme: http
     params:
@@ -53,6 +61,22 @@ scrape_configs:
         regex:         '(.*):.*'
         target_label:  'instance'
         replacement:   '${1}'
+{% if prometheus_federation %}
+  - job_name: 'federate'
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{job="prometheus"}'
+        - '{__name__=~"job:.*"}'
+    static_configs:
+      - targets:
+{% for item in prometheus_federation %}
+        - '{{ item }}'
+{% endfor %}
+{% endif %}
+
 alerting:
   alertmanagers:
     - scheme: http

@@ -6,7 +6,8 @@
       {%- endfor -%} 
     ],
     "labels": {
-      "job": "node_exporter"
+      "job": "node_exporter",
+      "environment": "{{ prometheus_monitoring_env }}"
     }
   }
 ]

@@ -3,6 +3,7 @@
     "targets": ["{{ hostvars[groups.prometheus.0].alt_hostname | default(hostvars[groups.prometheus.0].hostname) }}:9188"],
     "labels": {
       "job": "swift_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "swift"
     }
   }
