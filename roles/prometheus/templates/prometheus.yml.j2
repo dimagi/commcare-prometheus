@@ -61,15 +61,14 @@ scrape_configs:
         regex:         '(.*):.*'
         target_label:  'instance'
         replacement:   '${1}'
-{% if prometheus_federation_endpoints %}
+{% if prometheus_federation_endpoints is defined %}
   - job_name: 'federate'
     scrape_interval: 15s
     honor_labels: true
-    metrics_path: '/federate'
+    metrics_path: '/prometheus/federate'
     params:
-      'match[]':
-        - '{job="prometheus"}'
-        - '{__name__=~"job:.*"}'
+      match[]:
+      - '{__name__=~"job:.*"}'
     static_configs:
       - targets:
 {% for item in prometheus_federation_endpoints %}
