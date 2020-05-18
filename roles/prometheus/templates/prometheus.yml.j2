@@ -68,7 +68,7 @@ scrape_configs:
     metrics_path: '/prometheus/federate'
     params:
       match[]:
-      - '{__name__=~"job:.*"}'
+      - '{__name__=~".+"}' #scrape everything
     static_configs:
       - targets:
 {% for item in prometheus_federation_endpoints %}
