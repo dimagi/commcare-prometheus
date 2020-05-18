@@ -6,7 +6,9 @@
       {%- endfor -%} 
     ],
     "labels": {
-      "job": "statsd_exporter"
+      "job": "statsd_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
+      "service": "logproxy"
     }
   }
 ]

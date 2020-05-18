@@ -7,6 +7,7 @@
     ],
     "labels": {
       "job": "postgres_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "postgresql"
     }
   },
@@ -19,7 +20,8 @@
     ],
     "labels": {
       "job": "postgres_exporter",
-      "service": "pg_standby"
+      "environment": "{{ prometheus_monitoring_env }}",
+      "service": "postgresql"
     }
   }
 ]

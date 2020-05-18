@@ -6,13 +6,4 @@ swift_exporter_dependencies:
   - python3-yaml
   - python3-swiftclient
   - python3-prometheus-client
-swift_accounts:
-  - user: 'test'
-    key: 'test'
-    authurl: 'url1'
-    tag: 'formcontainer'
-  - user: 'test2'
-    key: 'test2'
-    authurl: 'url2'
-    tag: 'backupcontainer'
 

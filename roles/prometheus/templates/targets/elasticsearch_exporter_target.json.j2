@@ -3,6 +3,7 @@
     "targets": ["{{ hostvars[groups.elasticsearch.0].alt_hostname | default(hostvars[groups.elasticsearch.0].hostname) }}:9108"],
     "labels": {
       "job": "elasticsearch_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "elasticsearch"
     }
   }

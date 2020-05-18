@@ -3,6 +3,7 @@
     "targets": ["{{ hostvars[groups.couchdb2.0].alt_hostname | default(hostvars[groups.couchdb2.0].hostname) }}:9984"],
     "labels": {
       "job": "couchdb_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
       "service": "couchdb2"
     }
   }
