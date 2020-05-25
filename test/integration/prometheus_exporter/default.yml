@@ -3,6 +3,7 @@
   become: yes
   roles:
     - cloudalchemy.node-exporter
+    - cloudalchemy.pushgateway
     - bdellegrazie.postgres_exporter
     - couchdb_exporter
     - elasticsearch_exporter
