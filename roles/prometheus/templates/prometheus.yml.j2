@@ -51,6 +51,7 @@ scrape_configs:
     params:
       zookeeper: ["{{ groups.zookeeper.0 }}:2181"]
   - job_name: 'dummy' # it's mandatory
+    honor_labels: true
     file_sd_configs:
       - files:
         - /etc/prometheus/file_sd/*.json
