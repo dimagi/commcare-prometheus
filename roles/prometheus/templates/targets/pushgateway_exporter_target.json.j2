@@ -1,15 +1,27 @@
 [
   {
     "targets": [
-      {%- for item in groups.prometheus_pushgateway -%}
+      {%- for item in groups.celery -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9091"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
     "labels": {
       "job": "pushgateway",
       "environment": "{{ prometheus_monitoring_env }}",
-      "service": "commcare_hq"
+      "service": "commcare_celery"
+    }
+  },
+  {
+    "targets": [
+      {%- for item in groups.pillowtop -%}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9091"{% if not loop.last %},{% endif %}
+      {%- endfor -%} 
+    ],
+    "labels": {
+      "job": "pushgateway",
+      "environment": "{{ prometheus_monitoring_env }}",
+      "service": "commcare_pillowtop"
     }
   }
-]
 
+]
