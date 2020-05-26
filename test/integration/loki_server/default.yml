@@ -1,0 +1,7 @@
+---
+- hosts: test_kitchen
+  become: yes
+  roles:
+    - loki
+    - promtail
+

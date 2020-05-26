@@ -1,0 +1,56 @@
+- name: "Create Loki's data dir {{ loki_data_dir }}"
+  file:
+    path: "{{ loki_data_dir }}"
+    state: directory
+    recurse: yes
+
+- name: "Create Loki's binary dir {{ loki_server_install_dir }}"
+  file:
+    path: "{{ loki_server_install_dir }}"
+    state: directory
+    recurse: yes
+
+- name: "Create Loki's boltdb data dir {{ loki_storage_boltdb }}"
+  file:
+    path: "{{ loki_storage_boltdb }}"
+    state: directory
+    recurse: yes
+
+- name: "Create Loki's storage data dir {{ loki_storage_filesystem }}"
+  file:
+    path: "{{ loki_storage_filesystem }}"
+    state: directory
+    recurse: yes
+
+- name: unarchive loki server
+  unarchive:
+    remote_src: yes
+    dest: "{{ loki_server_install_dir }}"
+    src: "{{ loki_server_binary_url }}"
+  notify: restart loki server
+
+- name: Rename current release
+  file:
+    src: "{{ loki_server_install_dir }}/loki-linux-amd64"
+    path: "{{ loki_server_binary }}"
+    state: hard
+    
+- name: Create loki server's configuration
+  template:
+    src: loki-server-config.yml.j2
+    dest: "{{ loki_server_config_file }}"
+  notify: restart loki server
+  
+- name: create systemd script
+  template:
+    src: loki_server.service.j2
+    dest: /etc/systemd/system/loki_server.service
+  notify: restart loki server
+
+- meta: flush_handlers
+
+- name: make sure loki is started
+  service:
+    name: loki_server
+    state: started
+    enabled: yes

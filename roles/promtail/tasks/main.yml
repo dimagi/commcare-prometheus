@@ -1,0 +1,38 @@
+- name: "Create prpmtail's binary dir {{ promtail_install_dir }}"
+  file:
+    path: "{{ promtail_install_dir }}"
+    state: directory
+    recurse: yes
+
+- name: unarchive Promtail client
+  unarchive:
+    remote_src: yes
+    dest: "{{ promtail_install_dir }}"
+    src: "{{ promtail_binary_url }}"
+  notify: restart promtail service
+
+- name: Rename current release
+  file:
+    src: "{{ promtail_install_dir }}/promtail-linux-amd64"
+    path: "{{ promtail_exec_binary }}"
+    state: hard
+    
+- name: Create ptomtail server's configuration
+  template:
+    src: promtail-config.yml.j2
+    dest: "{{ promtail_config_file }}"
+  notify: restart promtail service
+  
+- name: create systemd script
+  template:
+    src: promtail.service.j2
+    dest: /etc/systemd/system/promtail.service
+  notify: restart promtail service
+
+- meta: flush_handlers
+
+- name: make sure promtail is started
+  service:
+    name: promtail
+    state: started
+    enabled: yes

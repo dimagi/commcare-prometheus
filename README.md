@@ -1,4 +1,4 @@
-# Ansible Role:  Prometheus , Grafana, Alertmanager and Exporter setup for CommCare
+# Ansible Role:  Prometheus , Grafana, Alertmanager, Exporter, Loki, Promtail setup for CommCare
 
 ## Testing locally
 
@@ -25,3 +25,4 @@ Requirements:
 * [Prometheus](https://prometheus.io/docs/prometheus/latest/configuration/configuration/)
 * [Grafana](https://grafana.com/)
 * [Exporter](https://prometheus.io/docs/instrumenting/exporters/)
+* [Loki](https://grafana.com/oss/loki/)
