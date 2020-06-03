@@ -11,7 +11,7 @@ groups:
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
 
   - alert: RabbitmqClusterDown
-    expr: sum(rabbitmq_running) < 2
+    expr: sum(rabbitmq_running{self="1"}) < 2
     for: 5m
     labels:
       severity: critical
@@ -20,7 +20,7 @@ groups:
       description: "Less than 2 nodes running in RabbitMQ cluster."
 
   - alert: RabbitmqOutOfMemory
-    expr: rabbitmq_node_mem_used / rabbitmq_node_mem_limit * 100 > 90
+    expr: rabbitmq_node_mem_used{self="1"} / rabbitmq_node_mem_limit{self="1"} * 100 > 90
     for: 5m
     labels:
       severity: warning
@@ -29,10 +29,10 @@ groups:
       description: "Memory available for RabbmitMQ is low (< 10%)"
 
   - alert: RabbitmqTooManyMessagesInQueue
-    expr: sum(rate(rabbitmq_queue_message_bytes_ready{cluster="rabbit@rabbit0.internal-icds-cloud.commcarehq.org"}[1m])) by (queue) > 2000
+    expr: sum(rate(rabbitmq_queue_message_bytes_ready{self="1"}[1m])) by (queue) > 100000
     for: 5m
     labels:
       severity: warning
     annotations:
       summary: "Rabbitmq too many messages in queue {{ $labels.queue }})"
-      description: "Queue is filling up (> 1000 msgs)\n  Current Queue size = {{ $value }}"
+      description: "Queue is filling up (> 100000 msgs)\n  Current Queue size = {{ $value }}"

@@ -63,12 +63,3 @@ groups:
     annotations:
       summary: "Redis too many connections (instance {{ $labels.instance }})"
       description: "Redis instance has too many connections\n  Current Count = {{ $value }}"
-
-  - alert: RedisNotEnoughConnections
-    expr: redis_connected_clients < 100
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Redis not enough connections (instance {{ $labels.instance }})"
-      description: "Redis instance should have more connections (> 5)\n  Current Count = {{ $value }}"
