@@ -14,7 +14,7 @@
 
   {
     "targets": [
-      {%- for item in groups.pg_standby -%}
+      {%- for item in groups.pg_standby | difference(groups.citusdb) -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],

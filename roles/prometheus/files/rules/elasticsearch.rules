@@ -1,15 +1,6 @@
 groups:
 - name: elasticsearch alerting rules
   rules:
-  - alert: ElasticsearchDiskSpaceLow
-    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 20
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Elasticsearch disk space low (instance {{ $labels.instance }})"
-      description: "The disk usage is over 80%\n  Current Usage = {{ $value }}"
-
   - alert: ElasticsearchDiskOutOfSpace
     expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 10
     for: 5m

@@ -76,17 +76,15 @@ scrape_configs:
 {% endfor %}
 {% endif %}
 
+{% if 'alertmanager' in group_names %}
 alerting:
   alertmanagers:
     - scheme: http
       path_prefix: /alertmanager
       static_configs:
         - targets:
-{% if 'alertmanager' in group_names %}
 {% for host in groups['alertmanager'] %}
             - '{{ host }}:9093'
 {% endfor %}
-{% else %}
-            - localhost:9093
 {% endif %}
 
