@@ -23,123 +23,20 @@ scrape_configs:
     relabel_configs:
       - source_labels: ['__journal__systemd_unit']
         target_label: 'unit'
-{% if groups.proxy is defined %}  
-  - job_name: nginx
+
+{% for group, log_files in promtail_log_files.items() %}
+{% if inventory_hostname in groups[group] %}
+{% for log_file_path in log_files %}
+  - job_name: {{ group }}
     entry_parser: raw
     static_configs:
     - targets:
         - localhost
       labels:
-        job: nginx
+        job: {{ group }}
         host: {{ inventory_hostname }}
         max_age: 6h
-        __path__: {{ nginx_log_files_path }}
+        __path__: {{ log_file_path }}
+{% endfor %}
 {% endif %}
-{% if groups.commcare is defined %}  
-  - job_name: commcare
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: commcare
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ commcare_log_files_path }}
-{% endif %}
-{% if groups.couchdb2_proxy is defined %}  
-  - job_name: couchdb2_proxy
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: couchdb2_proxy
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ couchdb2_proxy_log_files_path }}
-{% endif %}
-{% if groups.couchdb2 is defined %}  
-  - job_name: couchdb
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: couchdb
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ couchdb_log_files_path }}
-{% endif %}
-{% if groups.redis is defined %}  
-  - job_name: redis
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: redis
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ redis_log_files_path }}
-{% endif %}
-{% if groups.rabbitmq is defined %}  
-  - job_name: rabbitmq
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: rabbitmq
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ rabbitmq_log_files_path }}
-{% endif %}
-{% if groups.elasticsearch is defined %}  
-  - job_name: elasticsearch
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: elasticsearch
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ elasticsearch_log_files_path }}
-{% endif %}
-{% if groups.kafka is defined %}  
-  - job_name: kafka
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: kafka
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ kafka_log_files_path }}
-{% endif %}
-{% if groups.citusdb is defined %}  
-  - job_name: postgresql
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: postgresql
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ postgresql_log_files_path }}
-{% endif %}
-{% if groups.postgresql is defined %}  
-  - job_name: postgresql
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: postgresql
-        host: {{ inventory_hostname }}
-        max_age: 6h
-        __path__: {{ postgresql_log_files_path }}
-{% endif %}
+{% endfor %}

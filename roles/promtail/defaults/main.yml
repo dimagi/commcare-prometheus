@@ -5,12 +5,10 @@ promtail_exec_binary: "{{ loki_server_install_dir }}/promtail"
 promtail_binary_url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-amd64.zip"
 loki_server_url: "http://127.0.0.1:3100/loki/api/v1/push"
 promtail_listen_port: "9080"
-postgresql_log_files_path: "/var/log/test/*.log"
-nginx_log_files_path: "/var/log/test/*.log"
-elasticsearch_log_files_path: "/var/log/test/*.log"
-rabbitmq_log_files_path: "/var/log/test/*.log"
-redis_log_files_path: "/var/log/test/*.log"
-couchdb_log_files_path: "/var/log/test/*.log"
-couchdb2_proxy_log_files_path: "/var/log/test/*.log"
-commcare_log_files_path: "var/log/test/*.log"
-kafka_log_files_path: "var/log/test/*.log"
+
+# group to log file mapping
+promtail_log_files:
+    proxy:
+      - var/log/test/*.log
+    couchdb2_proxy:
+      - /var/log/test/*.log

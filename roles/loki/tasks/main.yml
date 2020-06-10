@@ -1,26 +1,13 @@
-- name: "Create Loki's data dir {{ loki_data_dir }}"
+- name: "Create required dir for loki server"
   file:
-    path: "{{ loki_data_dir }}"
+    path: "{{ item }}"
     state: directory
     recurse: yes
-
-- name: "Create Loki's binary dir {{ loki_server_install_dir }}"
-  file:
-    path: "{{ loki_server_install_dir }}"
-    state: directory
-    recurse: yes
-
-- name: "Create Loki's boltdb data dir {{ loki_storage_boltdb }}"
-  file:
-    path: "{{ loki_storage_boltdb }}"
-    state: directory
-    recurse: yes
-
-- name: "Create Loki's storage data dir {{ loki_storage_filesystem }}"
-  file:
-    path: "{{ loki_storage_filesystem }}"
-    state: directory
-    recurse: yes
+  with_items:
+    - "{{ loki_data_dir }}"
+    - "{{ loki_server_install_dir }}"
+    - "{{ loki_storage_boltdb }}"
+    - "{{ loki_storage_filesystem }}"
 
 - name: unarchive loki server
   unarchive:
