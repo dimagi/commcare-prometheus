@@ -1,0 +1,14 @@
+promtail_config_file: /etc/promtail-config.yml
+promtail_version: "1.5.0"
+promtail_install_dir: "/usr/local/bin/promtail"
+promtail_exec_binary: "{{ loki_server_install_dir }}/promtail"
+promtail_binary_url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-amd64.zip"
+loki_server_url: "http://127.0.0.1:3100/loki/api/v1/push"
+promtail_listen_port: "9080"
+
+# group to log file mapping
+promtail_log_files:
+    proxy:
+      - var/log/test/*.log
+    couchdb2_proxy:
+      - /var/log/test/*.log
