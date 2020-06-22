@@ -4,20 +4,20 @@
     state: directory
 
 - name: Get the exporter package
-  shell: "{{ golang_install_dir }}/bin/go get -u {{ prom_aggregation_gateway_install_url }}"
-  args:
-    executable: /bin/bash
-  ignore_errors: True
+  git:
+      repo: "{{ prom_aggregation_gateway_install_url }}"
+      dest: "{{ ansible_env.HOME }}/prom-aggregation-gateway"
+      version: sk/guage-aggregation
 
 - name: build package to exporter directory
   shell: "{{ golang_install_dir }}/bin/go build"
   args:  
-    chdir: "{{ ansible_env.HOME }}/go/src/github.com/LarkTechnologies/prom-aggregation-gateway/cmd/prom-aggregation-gateway/"
+    chdir: "{{ ansible_env.HOME }}/prom-aggregation-gateway/cmd/prom-aggregation-gateway/"
 
 
 - name: Move build package to exporter directory
   copy:
-    src: "{{ ansible_env.HOME }}/go/src/github.com/LarkTechnologies/prom-aggregation-gateway/cmd/prom-aggregation-gateway/prom-aggregation-gateway"
+    src: "{{ ansible_env.HOME }}/prom-aggregation-gateway/cmd/prom-aggregation-gateway/prom-aggregation-gateway"
     dest: "{{ prom_aggregation_gateway_install_dir }}"
     remote_src: yes
     mode: preserve

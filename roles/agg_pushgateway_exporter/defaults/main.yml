@@ -1,4 +1,4 @@
 prom_aggregation_gateway_install_dir: "/opt/prometheus-exporters/prom-aggregation-gateway"
 prom_aggregation_gateway_binary: "{{ prom_aggregation_gateway_install_dir }}/prom-aggregation-gateway"
-prom_aggregation_gateway_install_url: "github.com/LarkTechnologies/prom-aggregation-gateway"
+prom_aggregation_gateway_install_url: "https://github.com/dimagi/prom-aggregation-gateway.git"
 prom_aggregation_gateway_listen_addr: :9120
