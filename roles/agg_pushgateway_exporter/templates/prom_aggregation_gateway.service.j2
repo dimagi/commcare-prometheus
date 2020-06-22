@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart={{ airflow_exporter_binary }} --listen {{ prom_aggregation_gateway_listen_addr }}
+ExecStart={{ prom_aggregation_gateway_binary }} --listen {{ prom_aggregation_gateway_listen_addr }}
 
 [Install]
 WantedBy=multi-user.target
