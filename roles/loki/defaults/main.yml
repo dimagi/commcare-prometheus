@@ -1,0 +1,12 @@
+loki_data_dir: "/opt/data/loki"
+loki_storage_boltdb: "{{ loki_data_dir }}/index"
+loki_storage_filesystem: "{{ loki_data_dir}}/chunks"
+loki_server_install_dir: "/usr/local/bin/loki"
+loki_server_binary: "{{ loki_server_install_dir }}/loki"
+loki_server_version: 1.5.0
+loki_server_binary_url: "https://github.com/grafana/loki/releases/download/v{{ loki_server_version }}/loki-linux-amd64.zip"
+loki_server_listen_port: 3100
+loki_server_config_file: "/etc/loki-server-config.yml"
+loki_limits_ingestion_rate_mb: 50
+loki_log_retention_period: 3360h # careful on changing this there are certail limitaion on how to configure this 
+
