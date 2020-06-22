@@ -1,0 +1,38 @@
+- name: ensure Prometheus exporter directory exist
+  file:
+    path: "{{ prom_aggregation_gateway_install_dir }}"
+    state: directory
+
+- name: Get the exporter package
+  shell: "{{ golang_install_dir }}/bin/go get -u {{ prom_aggregation_gateway_install_url }}"
+  args:
+    executable: /bin/bash
+  ignore_errors: True
+
+- name: build package to exporter directory
+  shell: "{{ golang_install_dir }}/bin/go build"
+  args:  
+    chdir: "{{ ansible_env.HOME }}/go/src/github.com/LarkTechnologies/prom-aggregation-gateway/cmd/prom-aggregation-gateway/"
+
+
+- name: Move build package to exporter directory
+  copy:
+    src: "{{ ansible_env.HOME }}/go/src/github.com/LarkTechnologies/prom-aggregation-gateway/cmd/prom-aggregation-gateway/prom-aggregation-gateway"
+    dest: "{{ prom_aggregation_gateway_install_dir }}"
+    remote_src: yes
+    mode: preserve
+
+- name: create systemd script
+  template:
+    src: prom_aggregation_gateway.service.j2
+    dest: /etc/systemd/system/prom_aggregation_gateway.service
+  notify: restart prom_aggregation_gateway
+
+- meta: flush_handlers
+
+- name: Make sure prom_aggregation_gateway is started
+  service:
+    name: prom_aggregation_gateway
+    state: started
+    enabled: yes
+
