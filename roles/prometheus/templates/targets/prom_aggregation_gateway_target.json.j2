@@ -1,0 +1,10 @@
+[
+  {
+    "targets": ["{{ hostvars[groups.celery.0].alt_hostname | default(hostvars[groups.celery.0].hostname) }}:9120"],
+    "labels": {
+      "job": "prom_aggregation_gateway",
+      "environment": "{{ prometheus_monitoring_env }}",
+      "service": "celery"
+    }
+  }
+]
