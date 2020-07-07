@@ -3,7 +3,7 @@ Description=Kafka Exporter
 After=network.target
 
 [Service]
-ExecStart={{ kafka_exporter_symlink }} {% for kafka_server in groups.kafka %}--kafka.server={{ kafka_server }}:9092 {% endfor %} --web.listen-address={{ kafka_exporter_listen_address }}
+ExecStart={{ kafka_exporter_symlink }} --kafka.version={{ kafka_version }} {% for kafka_server in groups.kafka %}--kafka.server={{ kafka_server }}:9092 {% endfor %} --web.listen-address={{ kafka_exporter_listen_address }}
 
 [Install]
 WantedBy=multi-user.target

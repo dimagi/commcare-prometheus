@@ -1,9 +1,0 @@
-[Unit]
-Description=Kafka Exporter
-After=network.target
-
-[Service]
-ExecStart={{ kafka_exporter_symlink }} {% for kafka_server in kafka_exporter_kafka_servers %}--kafka.server={{ kafka_server }} {% endfor %} --web.listen-address={{ kafka_exporter_listen_address }}
-
-[Install]
-WantedBy=multi-user.target

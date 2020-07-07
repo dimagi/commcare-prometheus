@@ -1,22 +1,16 @@
-- include_role: 
-    name: gantsign.golang
-
 - name: ensure Prometheus exporter directory exist
   file:
     path: "{{ zookeeper_exporter_install_dir }}"
     state: directory
 
-- name: Get the zookeeper package
-  shell: "{{ golang_install_dir }}/bin/go get -u {{ zookeeper_exporter_url }}"
-  args:
-    executable: /bin/bash
-
-- name: Move zookeeper build package to exporter directory
-  copy:
-    src: "{{ ansible_env.HOME }}/go/bin/kafka_zookeeper_exporter"
-    dest: "{{ zookeeper_exporter_binary }}"
+- name: unarchive zookeeper Exporter
+  unarchive:
     remote_src: yes
-    mode: preserve
+    dest: "{{ zookeeper_exporter_install_dir }}"
+    src: "{{ zookeeper_exporter_url }}"
+    creates: "{{ zookeeper_exporter_binary }}"
+  notify: restart zookeeper exporter
+
 - name: create systemd script
   template:
     src: zookeeper_exporter.service.j2
