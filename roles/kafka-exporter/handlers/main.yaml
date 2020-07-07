@@ -1,6 +1,0 @@
----
-- name: restart kafka exporter
-  systemd:
-    name: kafka_exporter
-    state: restarted
-    daemon_reload: yes

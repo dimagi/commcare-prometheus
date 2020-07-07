@@ -41,15 +41,6 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ ansible_default_ipv4.address }}:9115
 {% endif %}        
-  - job_name: kafka_zookeeper_exporter
-    static_configs:
-      - targets: ["{{ groups.zookeeper.0 }}:9381"]
-        labels:
-          environment: {{ prometheus_monitoring_env }}
-    metrics_path: /kafka
-    scheme: http
-    params:
-      zookeeper: ["{{ groups.zookeeper.0 }}:2181"]
   - job_name: 'dummy' # it's mandatory
     file_sd_configs:
       - files:

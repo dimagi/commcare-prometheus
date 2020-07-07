@@ -1,4 +1,9 @@
 zookeeper_exporter_install_dir: "/opt/prometheus-exporters/zookeeper-exporter"
-zookeeper_exporter_url: "github.com/cloudflare/kafka_zookeeper_exporter"
-zookeeper_exporter_binary: "{{ zookeeper_exporter_install_dir }}/kafka_zookeeper_exporter"
-zookeeper_exporter_listen_address: ":9381" 
+zookeeper_exporter_version: "0.1.8"
+zookeeper_exporter_name: "zookeeper-exporter-v{{ zookeeper_exporter_version }}-linux"
+zookeeper_exporter_url: "https://github.com/dabealu/zookeeper-exporter/releases/download/v{{ zookeeper_exporter_version }}/{{ zookeeper_exporter_name }}.tar.gz"
+zookeeper_exporter_binary: "{{ zookeeper_exporter_install_dir }}/{{ zookeeper_exporter_name }}/zookeeper-exporter"
+zookeeper_exporter_listen_address: "0.0.0.0:9141"
+zookeeper_host: "127.0.0.1"
+zookeeper_port: "2181"
+
