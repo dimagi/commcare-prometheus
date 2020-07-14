@@ -11,7 +11,7 @@ groups:
       description: "Redis instance is down for 5 min."
 
   - alert: RedisMissingMaster
-    expr: count(redis_instance_info{role="master"}) == 0
+    expr: sum by (environment) (redis_instance_info{role="master"}) < 1
     for: 5m
     labels:
       severity: critical
@@ -20,7 +20,7 @@ groups:
       description: "Redis cluster has no node marked as master"
 
   - alert: RedisTooManyMasters
-    expr: count(redis_instance_info{role="master"}) > 1
+    expr: sum by (environment) (redis_instance_info{role="master"}) >1 
     for: 5m
     labels:
       severity: critical

@@ -96,7 +96,7 @@ groups:
     annotations:
       description: '{{ $labels.instance }} got rebooted.'
       summary: Instance {{ $labels.instance }} has been rebooted.
-    expr: changes(node_boot_time_seconds[1h]) > 0
+    expr: (node_time_seconds - node_boot_time_seconds) < (19*60) >= (60)
     labels:
       severity: critical
     
