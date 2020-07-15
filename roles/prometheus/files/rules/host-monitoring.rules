@@ -78,7 +78,7 @@ groups:
     annotations:
       description: '{{ $labels.instance }} of job {{ $labels.job }} has less than 10% space remaining.'
       summary: Instance {{ $labels.instance }} - Critical disk space usage
-    expr: node_filesystem_free_bytes{mountpoint!~"^/run(/.*|$)",fstype!~"(squashfs|fuse.*)"} / node_filesystem_size_bytes < 0.15
+    expr: sum without(device,fstype) (node_filesystem_free_bytes{fstype!~"(squashfs|fuse.*)",mountpoint!~"^/run(/.*|$)"} / node_filesystem_size_bytes < 0.15)
     for: 5m
     labels:
       severity: critical
