@@ -1,4 +1,5 @@
 ---
+alertmanager_version: 0.21.0
 alertmanager_web_external_url: "http://0.0.0.0:9093/alertmanager"
 alertmanager_slack_api_url: "http://example.org"
 alertmanager_receivers:
@@ -13,9 +14,11 @@ alertmanager_route:
   repeat_interval: 4h
   receiver: slack
 
+prometheus_version: 2.19.3
 prometheus_db_dir: /opt/data/prometheus
 prometheus_storage_retention: "365d"
 prometheus_web_external_url: "http://0.0.0.0:9090/prometheus"
+grafana_version: 7.1.1
 grafana_data_dir: /opt/data/grafana
 grafana_url: "http://0.0.0.0:3000/grafana/"
 grafana_security:
