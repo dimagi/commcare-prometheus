@@ -7,7 +7,11 @@
     group: prometheus
  
 - name: Configure  Prometheus
-  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
+  template: 
+    src: prometheus.yml.j2 
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
   tags: prometheus_config
   notify: restart prometheus
 
@@ -15,6 +19,8 @@
   template:
     src: "{{ item }}"
     dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
+    owner: prometheus
+    group: prometheus
   with_fileglob:
     - ../templates/targets/*.json.j2
   notify: restart prometheus
@@ -29,6 +35,8 @@
   copy:
     src: "{{ item }}"
     dest: /etc/prometheus/rules/{{item | basename }}
+    owner: prometheus
+    group: prometheus
   with_fileglob:
     - ../files/rules/*.rules  
   notify: restart prometheus
