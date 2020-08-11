@@ -5,7 +5,7 @@ groups:
     expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 10
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Elasticsearch disk out of space (instance {{ $labels.instance }})"
       description: "The disk usage is over 90%\n  Current Usage = {{ $value }}"
@@ -14,7 +14,7 @@ groups:
     expr: elasticsearch_cluster_health_status{color="red"} == 1
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Elasticsearch Cluster Red (instance {{ $labels.instance }})"
       description: "Elastic Cluster Red status\n  Current Status = {{ $value }}"
@@ -32,7 +32,19 @@ groups:
     expr: elasticsearch_cluster_health_unassigned_shards > 0
     for: 5m
     labels:
-      severity: error
+      severity: critical
     annotations:
       summary: "Elasticsearch unassigned shards (instance {{ $labels.instance }})"
       description: "Number of unassigned shards for 2 min\n  Unassigned shards = {{ $value }}"
+  
+  - alert: ElasticsearchServiceDown
+    expr: node_systemd_unit_state{name="elasticsearch.service",state="active"} == 0 or node_systemd_unit_state{name="elasticsearch.service",state="failed"} == 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Elasticsearch Down on {{ $labels.instance }})"
+      description: "Elasticsearch is down on {{ $labels.instance }} for more than 5 min"
+
+
+

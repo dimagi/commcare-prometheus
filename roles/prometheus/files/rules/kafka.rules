@@ -27,3 +27,12 @@ groups:
     annotations:
       summary: "Kafka consumers group  lag on (instance {{ $labels.instance }})"
       description: "Kafka consumers group is behind . Current value = {{ $value }}"
+
+  - alert: ZookeeperDown
+    expr: sum by (environment) (zk_up) < 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations: 
+      summary: "zookeeper is down on Instance {{ $labels.instance }}"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
