@@ -12,7 +12,7 @@ platforms:
       run_command: /bin/systemd
       provision_command:
         - apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ansible/ansible
-        - apt-get update && apt-get -y -q install rsync ansible python-apt python-pycurl python-jmespath iproute2 git make postgresql pgbouncer python3-pip python-pip unzip
+        - apt-get update && apt-get -y -q install rsync ansible python-apt python-pycurl python-jmespath iproute2 git make postgresql pgbouncer python3-pip python-pip unzip libpq-dev
       use_sudo: false
 
 provisioner:
