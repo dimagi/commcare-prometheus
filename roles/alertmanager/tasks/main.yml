@@ -1,7 +1,9 @@
 - name: Configure  alertmanager
-  template: src=alertmanager.yml.j2 dest=/etc/alertmanager/alertmanager.yml
-  owner: alertmanager
-  group: alertmanager
+  template: 
+    src: alertmanager.yml.j2 
+    dest: /etc/alertmanager/alertmanager.yml
+    owner: alertmanager
+    group: alertmanager
   tags: alertmanager
   notify: restart alertmanager
 
