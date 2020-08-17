@@ -1,0 +1,4 @@
+---
+dependencies:
+  - src: bdellegrazie.postgres_exporter
+    version: v4.1.0

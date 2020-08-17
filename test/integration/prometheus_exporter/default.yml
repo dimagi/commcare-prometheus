@@ -3,7 +3,7 @@
   become: yes
   roles:
     - cloudalchemy.node-exporter
-    - bdellegrazie.postgres_exporter
+    - postgres_exporter
     - couchdb_exporter
     - elasticsearch_exporter
     - haproxy_exporter
