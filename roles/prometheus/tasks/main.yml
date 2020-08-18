@@ -49,4 +49,5 @@
     regex: '^{{ item }}.*'
     line: "{{ item }} {{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}" 
   with_items: "{{ groups.all }}"
-  when: prometheus_monitoring_enabled| default(False) 
+  when: prometheus_monitoring_enabled| default(False)
+  tags: always
