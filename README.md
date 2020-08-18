@@ -22,8 +22,17 @@ Requirements:
 ## How to use
 1. Requiremets:
    *  ansible >= 2.9.4
+   
+2. Build and release
 
-2. installation
+```
+ansible-galaxy collection build
+```
+
+Then create a new release on Github: https://github.com/dimagi/commcare-prometheus/releases
+and attache the build archive as an asset.
+
+4. installation
   please refer to this guide for [installation](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
 
 3. Usage Example
