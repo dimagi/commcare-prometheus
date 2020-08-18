@@ -1,0 +1,15 @@
+[
+  {
+    "targets": [
+      {%- for item in groups.webworkers + groups.pillowtop -%}
+      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9011"{% if not loop.last %},{% endif %}
+      {%- endfor -%}
+    ],
+    "labels": {
+      "job": "commcare_exporter",
+      "environment": "{{ prometheus_monitoring_env }}",
+      "service": "commcare"
+    }
+  }
+]
+
