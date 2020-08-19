@@ -44,10 +44,11 @@
 
 - name: Sets /etc/hosts
   become: yes
-  lineinfile:
+  blockinfile:
     dest: /etc/hosts
-    regex: '^{{ item }}.*'
-    line: "{{ item }} {{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}" 
-  with_items: "{{ groups.all }}"
+    block: |
+      {% for host in groups.all -%}
+      {{ host }} {{ hostvars[host].alt_hostname | default(hostvars[host].hostname) }}
+      {% endfor -%}
   when: prometheus_monitoring_enabled| default(False)
   tags: always
