@@ -1,20 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.postgresql -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
-    "labels": {
-      "job": "postgres_exporter",
-      "environment": "{{ prometheus_monitoring_env }}",
-      "service": "postgresql"
-    }
-  },
-
-  {
-    "targets": [
-      {%- for item in groups.pg_standby | difference(groups.citusdb) -%}
+      {%- for item in (groups.postgresql + (groups.pg_standby | difference(groups.citusdb)))|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],

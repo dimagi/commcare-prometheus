@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.citusdb -%}
+      {%- for item in groups.citusdb|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9187"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],

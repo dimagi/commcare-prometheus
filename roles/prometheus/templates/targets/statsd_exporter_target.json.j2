@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.logproxy -%}
+      {%- for item in groups.logproxy|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9102"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
