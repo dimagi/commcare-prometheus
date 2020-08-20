@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.all -%}
+      {%- for item in groups.all|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9100"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
@@ -11,4 +11,3 @@
     }
   }
 ]
-

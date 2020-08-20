@@ -21,6 +21,7 @@
     dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
     owner: prometheus
     group: prometheus
+    mode: 0660
   with_fileglob:
     - ../templates/targets/*.json.j2
   notify: restart prometheus
@@ -37,6 +38,7 @@
     dest: /etc/prometheus/rules/{{item | basename }}
     owner: prometheus
     group: prometheus
+    mode: 0660
   with_fileglob:
     - ../files/rules/*.rules  
   notify: restart prometheus
@@ -44,10 +46,11 @@
 
 - name: Sets /etc/hosts
   become: yes
-  lineinfile:
+  blockinfile:
     dest: /etc/hosts
-    regex: '^{{ item }}.*'
-    line: "{{ item }} {{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}" 
-  with_items: "{{ groups.all }}"
+    block: |
+      {% for host in groups.all|sort -%}
+      {{ host }} {{ hostvars[host].alt_hostname | default(hostvars[host].hostname) }}
+      {% endfor -%}
   when: prometheus_monitoring_enabled| default(False)
   tags: always

@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.rabbitmq -%}
+      {%- for item in groups.rabbitmq|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9419"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
@@ -12,4 +12,3 @@
     }
   }
 ]
-

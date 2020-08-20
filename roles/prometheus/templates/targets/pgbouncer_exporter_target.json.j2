@@ -1,20 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.postgresql -%}
-      "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9132"{% if not loop.last %},{% endif %}
-      {%- endfor -%} 
-    ],
-    "labels": {
-      "job": "pgbouncer_exporter",
-      "environment": "{{ prometheus_monitoring_env }}",
-      "service": "pgbouncer"
-    }
-  },
-
-  {
-    "targets": [
-      {%- for item in groups.pg_standby -%}
+      {%- for item in (groups.postgresql + groups.pg_standby)|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9132"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
@@ -25,4 +12,3 @@
     }
   }
 ]
-

@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in groups.redis -%}
+      {%- for item in groups.redis|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9121"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
@@ -12,4 +12,3 @@
     }
   }
 ]
-
