@@ -21,6 +21,7 @@
     dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
     owner: prometheus
     group: prometheus
+    mode: 0660
   with_fileglob:
     - ../templates/targets/*.json.j2
   notify: restart prometheus
@@ -37,6 +38,7 @@
     dest: /etc/prometheus/rules/{{item | basename }}
     owner: prometheus
     group: prometheus
+    mode: 0660
   with_fileglob:
     - ../files/rules/*.rules  
   notify: restart prometheus
