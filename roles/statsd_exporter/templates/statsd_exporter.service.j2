@@ -3,7 +3,7 @@ Description=Statsd Exporter
 After=network.target
 
 [Service]
-ExecStart={{ statsd_exporter_binary }} -web.listen-address {{ statsd_exporter_listen_address }} -statsd.listen-udp {{ statsd_exporter_listen_udp_address }} -statsd.mapping-config {{ statsd_exporter_mapping_config_file }}
+ExecStart={{ statsd_exporter_binary }}  --statsd.read-buffer 26214400 --web.listen-address {{ statsd_exporter_listen_address }} --statsd.listen-udp {{ statsd_exporter_listen_udp_address }} --statsd.mapping-config {{ statsd_exporter_mapping_config_file }} --log.level=info --no-statsd.parse-influxdb-tags --no-statsd.parse-librato-tags --no-statsd.parse-signalfx-tags
 
 [Install]
 WantedBy=multi-user.target
