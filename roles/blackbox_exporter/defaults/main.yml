@@ -1,5 +1,5 @@
 blackbox_exporter_install_dir: "/opt/prometheus-exporters/haproxy-exporter"
-blackbox_exporter_version: "0.16.0"
+blackbox_exporter_version: "0.17.0"
 blackbox_exporter_name: "blackbox_exporter-{{ blackbox_exporter_version }}.linux-amd64"
 blackbox_exporter_url: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/{{ blackbox_exporter_name }}.tar.gz"
 blackbox_exporter_binary: "{{ blackbox_exporter_install_dir }}/{{ blackbox_exporter_name }}/blackbox_exporter"
