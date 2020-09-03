@@ -1,6 +1,6 @@
 ---
 statsd_exporter_install_dir: "/opt/prometheus-exporters/statsd-exporter"
-statsd_exporter_version: "0.6.0"
+statsd_exporter_version: "0.18.0"
 statsd_exporter_name: "statsd_exporter-{{ statsd_exporter_version }}.linux-amd64"
 statsd_exporter_url: "https://github.com/prometheus/statsd_exporter/releases/download/v{{ statsd_exporter_version }}/{{ statsd_exporter_name }}.tar.gz"
 statsd_exporter_binary: "{{ statsd_exporter_install_dir }}/{{ statsd_exporter_name }}/statsd_exporter"
