@@ -1,6 +1,6 @@
 ---
 rabbitmq_exporter_install_dir: "/opt/prometheus-exporters/rabbitmq-exporter"
-rabbitmq_exporter_version:  "1.0.0-RC7.1"
+rabbitmq_exporter_version:  "1.0.0-RC7"
 rabbitmq_exporter_release_name: "rabbitmq_exporter-{{ rabbitmq_exporter_version }}.linux-amd64"
 rabbitmq_exporter_url: "https://github.com/kbudde/rabbitmq_exporter/releases/download/v{{ rabbitmq_exporter_version }}/{{ rabbitmq_exporter_release_name }}.tar.gz"
 rabbitmq_exporter_binary: "{{ rabbitmq_exporter_install_dir }}/{{ rabbitmq_exporter_release_name }}/rabbitmq_exporter"
