@@ -1,6 +1,6 @@
 ---
 couchdb_exporter_install_dir: "/opt/prometheus-exporters/couchdb-prometheus-exporter"
-couchdb_exporter_version: "27.0.0"
+couchdb_exporter_version: "28.0.0"
 couchdb_exporter_name: "couchdb-prometheus-exporter"
 couchdb_exporter_url: "https://github.com/gesellix/couchdb-prometheus-exporter/releases/download/v{{ couchdb_exporter_version }}/couchdb-prometheus-exporter_{{ couchdb_exporter_version }}_Linux_x86_64.tar.gz"
 couchdb_exporter_binary: "{{ couchdb_exporter_install_dir }}/{{ couchdb_exporter_name }}"

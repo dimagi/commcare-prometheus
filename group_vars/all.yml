@@ -14,11 +14,11 @@ alertmanager_route:
   repeat_interval: 4h
   receiver: slack
 
-prometheus_version: 2.19.3
+prometheus_version: 2.20.1
 prometheus_db_dir: /opt/data/prometheus
 prometheus_storage_retention: "365d"
 prometheus_web_external_url: "http://0.0.0.0:9090/prometheus"
-grafana_version: 7.1.1
+grafana_version: 7.1.5
 grafana_data_dir: /opt/data/grafana
 grafana_url: "http://0.0.0.0:3000/grafana/"
 grafana_security:
@@ -28,6 +28,7 @@ grafana_security:
 prometheus_http_probe_urls:
   - 127.0.0.1:9090
   - 127.0.0.1:3000
+node_exporter_version: 1.0.1
 node_exporter_enabled_collectors: ['systemd','ntp','processes','supervisord']
 swift_accounts:
   - user: 'test'
@@ -40,3 +41,4 @@ swift_accounts:
     tag: 'backupcontainer'
 prometheus_federation_endpoints:
   - 10.0.0.1:9090
+postgres_exporter_flags: ['--auto-discover-databases','--extend.query-path="{{ postgres_exporter_home }}/queries.yml"']
