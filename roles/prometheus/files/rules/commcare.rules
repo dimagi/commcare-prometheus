@@ -1,0 +1,90 @@
+groups:
+- name: Alerting rules for Commcare
+  rules:
+  - alert: djangoErrorRate
+    expr: sum(increase(nginx_requests{environment="icds",status_code="500"}[10m])) / sum(increase(nginx_requests{environment="icds"}[10m])) > 5
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Django Error rate is high"
+      description: "Django Error rate is above {{ $value }}% in the last 5 min"
+
+- name: Alerting rules for url groups
+  rules:
+  - alert: djangoGroupErrorRate
+    expr: sum by (url_group)(increase(nginx_requests{environment="icds",status_code="500"}[10m])) / sum by(url_group) (increase(nginx_requests{environment="icds"}[10m])) > 5
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Django Error rate is high"
+      description: "Django Error rate is above {{ $value }}% in the last 5 min"
+
+- name: Alerting rules for Async Indicator 
+  rules:
+  - alert: asyncIndicatorLag
+    expr: avg(commcare_async_indicator_true_lag / 3600) > 24
+    for: 1h
+    labels:
+      severity: critical
+    annotations:
+      summary: "Async Indicator Queue Lag is High ( > 24h)"
+      description: "Async Indicator Queue Lag is High {{ $value }}h since an hour"
+
+- name: Alerting rules for pillow lag
+  rules:
+  - alert: pillowLag
+    expr: avg by (pillow_name) (commcare_change_feed_change_lag) > 21600
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Pillow lag is high "
+      description: "pillow Lag is High {{ $value }}h since 10 min"
+
+- name: Alerting rules for Dashboard error rate
+  rules:
+  - alert: icdsDashboardErrorRate
+    expr: sum(increase(nginx_requests{environment="$env",referer_group="icds_dashboard",status_code=~"500|502|504"}[10m])) * 100
+            /
+          (sum(increase(nginx_requests{environment="$env",referer_group="icds_dashboard",status_code="200"}[10m]))/14) > 10
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Dashboard Error Rate is high"
+      description: "Dashboard error rate is high. {{ $value }}% for last 5 min"
+
+- name: Alerting rules for Pillow error rate
+  rules:
+  - alert: pillowErrorRate
+    expr: sum by(environment)(commcare_pillowtop_error_queue) > 20000
+    for: 1h
+    labels:
+      severity: critical
+    annotations:
+      summary: "pillow Error Rate is high"
+      description: "pillow error rate is high. {{ $value }} for last 1 hour"
+
+- name: Alerting rules for Pillow processing lag
+  rules:
+  - alert: pillowProcessingLag
+    expr: min by (pillow_name,environment)(commcare_change_feed_need_processing{feed_type="kafka"}) > 5000
+    for: 1d
+    labels:
+      severity: critical
+    annotations:
+      summary: "pillow processing rate lag is high"
+      description: "pillow processing rate lag is high. {{ $value }} for last 1 day"
+
+- name: Alerting rules for object storage usage
+  rules:
+  - alert: objectStorageSpace
+    expr: (swift_used_bytes/swift_quota_bytes * 100 ) > 92
+    for: 1h
+    labels:
+      severity: critical
+    annotations:
+      summary: "Object storage space is full"
+      description: "object storage space is less than {{ $value }}% free"
