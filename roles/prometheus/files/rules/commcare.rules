@@ -70,8 +70,8 @@ groups:
 - name: Alerting rules for Pillow processing lag
   rules:
   - alert: pillowProcessingLag
-    expr: min by (pillow_name,environment)(commcare_change_feed_need_processing{feed_type="kafka"}) > 5000
-    for: 1d
+    expr: max by (pillow_name,environment)(commcare_change_feed_change_lag) > 14400
+    for: 1h
     labels:
       severity: critical
     annotations:
