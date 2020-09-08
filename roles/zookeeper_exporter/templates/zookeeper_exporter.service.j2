@@ -3,7 +3,7 @@ Description=Zookeeper Exporter
 After=network.target
 
 [Service]
-ExecStart={{ zookeeper_exporter_binary }} -listen "{{ zookeeper_exporter_listen_address }}" -zk-host "{{ zookeeper_host }}" -zk-port "{{ zookeeper_port }}"
+ExecStart={{ zookeeper_exporter_binary }} -listen "{{ zookeeper_exporter_listen_address }}" -zk-hosts "{{ zookeeper_host }}:{{ zookeeper_port }}"
 
 [Install]
 WantedBy=multi-user.target
