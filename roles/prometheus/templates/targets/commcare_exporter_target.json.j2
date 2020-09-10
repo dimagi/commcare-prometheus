@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in (groups.webworkers + groups.pillowtop + groups.celery)|sort -%}
+      {%- for item in (groups.webworkers +(groups.webworkers | difference(groups.pillowtop + groups.celery)))|sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9011"{% if not loop.last %},{% endif %}
       {%- endfor -%}
     ],
