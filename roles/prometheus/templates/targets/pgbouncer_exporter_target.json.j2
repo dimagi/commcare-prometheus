@@ -1,7 +1,7 @@
 [
   {
     "targets": [
-      {%- for item in (groups.postgresql + groups.pg_standby +(groups.citusdb | difference(groups.pg_standby)))|sort -%}
+      {%- for item in (groups.postgresql + groups.pg_standby + groups.citusdb) | unique | sort -%}
       "{{ hostvars[item].alt_hostname | default(hostvars[item].hostname) }}:9132"{% if not loop.last %},{% endif %}
       {%- endfor -%} 
     ],
