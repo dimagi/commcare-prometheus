@@ -3,17 +3,3 @@ dependencies:
   - src: cloudalchemy.alertmanager
     version: 0.16.0
     alertmanager_resolve_timeout: 5m
-    alertmanager_route:
-      receiver: 'slack-notifications'
-      group_by: [ 'alertname','instance', 'severity' ]
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 15m
-    alertmanager_receivers:
-      - name: 'slack-notifications'
-        slack_configs:
-          - channel: "{{ prometheus_monitoring_slack_channel }}"
-            send_resolved: true
-            icon_url: https://avatars3.githubusercontent.com/u/3380462
-            title: !unsafe '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] Prometheus Notification  ( {{ .CommonLabels.alertname }} )'
-            text: !unsafe '{{ template "slack.myorg.text" . }}'
