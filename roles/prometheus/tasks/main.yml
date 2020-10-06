@@ -6,15 +6,6 @@
     owner: prometheus
     group: prometheus
  
-- name: Configure  Prometheus
-  template: 
-    src: prometheus.yml.j2 
-    dest: /etc/prometheus/prometheus.yml
-    owner: prometheus
-    group: prometheus
-  tags: prometheus_config
-  notify: restart prometheus
-
 - name: Configure Prometheus target
   template:
     src: "{{ item }}"
@@ -26,23 +17,6 @@
     - ../templates/targets/*.json.j2
   notify: restart prometheus
   tags: prometheus_targets
-
-- name: Remove default alert rules file
-  file:
-    path: /etc/prometheus/rules/ansible_managed.rules
-    state: absent
-
-- name: Copy Alert rules file
-  copy:
-    src: "{{ item }}"
-    dest: /etc/prometheus/rules/{{item | basename }}
-    owner: prometheus
-    group: prometheus
-    mode: 0660
-  with_fileglob:
-    - ../files/rules/*.rules  
-  notify: restart prometheus
-  tags: prometheus_alerts
 
 - name: Sets /etc/hosts
   become: yes
