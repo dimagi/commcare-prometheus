@@ -1,1 +1,20 @@
 prometheus_monitoring_env: prometheus
+prometheus_targets:
+  - { "name": airflow_exporter_target, "enabled": "{{ groups.get('airflow') | default(False) }}" }
+  - { "name": celery_exporter_target }
+  - { "name": citusdb_exporter_target, "enabled": "{{ groups.get('citusdb') | default(False) }}" }
+  - { "name": commcare_exporter_target }
+  - { "name": couchdb_exporter_target }
+  - { "name": elasticsearch_exporter_target }
+  - { "name": haproxy_exporter_target }
+  - { "name": kafka_exporter_target }
+  - { "name": nginx_exporter_target }
+  - { "name": node_exporter_target }
+  - { "name": pgbouncer_exporter_target }
+  - { "name": postgresql_exporter_target }
+  - { "name": prom_aggregation_gateway_target }
+  - { "name": rabbitmq_exporter_target }
+  - { "name": redis_exporter_target }
+  - { "name": statsd_exporter_target }
+  - { "name": swift_exporter_target, "enabled": "{{ swift_accounts is defined }}" }
+  - { "name": zookeeper_exporter_targets }
