@@ -14,7 +14,7 @@
     group: prometheus
     mode: 0660
   when: item is defined and item.enabled|default(True)
-  loop: "{{ prometheus_targets }}"
+  loop: "{{ prometheus_custom_targets }}"
   notify: restart prometheus
   tags: prometheus_targets
 
@@ -23,7 +23,7 @@
     path: "/etc/prometheus/file_sd/{{ item.name }}.json"
     state: absent
   when: item is not defined or not item.enabled|default(True)
-  loop: "{{ prometheus_targets }}"
+  loop: "{{ prometheus_custom_targets }}"
   notify: restart prometheus
   tags: prometheus_targets
 

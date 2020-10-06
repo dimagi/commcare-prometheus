@@ -1,5 +1,5 @@
 prometheus_monitoring_env: prometheus
-prometheus_targets:
+prometheus_custom_targets:
   - { "name": airflow_exporter_target, "enabled": "{{ groups.get('airflow') | default(False) }}" }
   - { "name": celery_exporter_target }
   - { "name": citusdb_exporter_target, "enabled": "{{ groups.get('citusdb') | default(False) }}" }
