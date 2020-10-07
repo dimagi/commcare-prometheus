@@ -2,3 +2,5 @@
 dependencies:
   - src: bdellegrazie.postgres_exporter
     version: v4.1.0
+    postgres_exporter_version: 0.8.0
+    postgres_exporter_queries: "exporter_queries.yml"  # use different name from bdellegrazie.postgres_exporter

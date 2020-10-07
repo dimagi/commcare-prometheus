@@ -6,43 +6,26 @@
     owner: prometheus
     group: prometheus
  
-- name: Configure  Prometheus
-  template: 
-    src: prometheus.yml.j2 
-    dest: /etc/prometheus/prometheus.yml
-    owner: prometheus
-    group: prometheus
-  tags: prometheus_config
-  notify: restart prometheus
-
-- name: Configure Prometheus target
+- name: Configure enabled Prometheus targets
   template:
-    src: "{{ item }}"
-    dest: /etc/prometheus/file_sd/{{ item | basename | regex_replace('\.j2$', '') }}
+    src: "targets/{{ item.name }}.json.j2"
+    dest: "/etc/prometheus/file_sd/{{ item.name }}.json"
     owner: prometheus
     group: prometheus
     mode: 0660
-  with_fileglob:
-    - ../templates/targets/*.json.j2
+  when: item is defined and item.enabled|default(True)
+  loop: "{{ prometheus_custom_targets }}"
   notify: restart prometheus
   tags: prometheus_targets
 
-- name: Remove default alert rules file
+- name: Remove disabled Prometheus targets
   file:
-    path: /etc/prometheus/rules/ansible_managed.rules
+    path: "/etc/prometheus/file_sd/{{ item.name }}.json"
     state: absent
-
-- name: Copy Alert rules file
-  copy:
-    src: "{{ item }}"
-    dest: /etc/prometheus/rules/{{item | basename }}
-    owner: prometheus
-    group: prometheus
-    mode: 0660
-  with_fileglob:
-    - ../files/rules/*.rules  
+  when: item is not defined or not item.enabled|default(True)
+  loop: "{{ prometheus_custom_targets }}"
   notify: restart prometheus
-  tags: prometheus_alerts
+  tags: prometheus_targets
 
 - name: Sets /etc/hosts
   become: yes

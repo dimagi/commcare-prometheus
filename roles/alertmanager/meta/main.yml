@@ -2,4 +2,4 @@
 dependencies:
   - src: cloudalchemy.alertmanager
     version: 0.16.0
-
+    alertmanager_resolve_timeout: 5m
